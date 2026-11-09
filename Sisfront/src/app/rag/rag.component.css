@@ -1,0 +1,357 @@
+:host {
+  position: relative;
+  z-index: 2100;
+  font-family: Roboto, "Helvetica Neue", sans-serif;
+}
+
+/* Container Wrapper */
+.rag-widget-wrapper {
+  position: fixed;
+  right: 24px;
+  bottom: 24px;
+  z-index: 2100;
+}
+
+/* ==== BOTÓN FLOTANTE (FAB) ==== */
+.rag-fab-btn {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  background-color: #800000;
+  color: #FFFFFF;
+  border: none;
+  padding: 10px 18px;
+  border-radius: 30px;
+  cursor: pointer;
+  box-shadow: 0 4px 16px rgba(128, 0, 0, 0.35);
+  transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+  outline: none;
+}
+
+.rag-fab-btn:hover {
+  background-color: #A00000;
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(128, 0, 0, 0.45);
+}
+.fab-icon {
+font-size: 22px;
+width: 22px;
+height: 22px;
+}
+
+.fab-text {
+font-size: 0.875rem;
+font-weight: 700;
+letter-spacing: 0.3px;
+}
+
+.fab-badge {
+background-color: rgba(255, 255, 255, 0.2);
+color: #FFFFFF;
+font-size: 0.675rem;
+font-weight: 800;
+padding: 2px 6px;
+border-radius: 10px;
+letter-spacing: 0.5px;
+}
+
+/* ==== VENTANA FLOTANTE DEL CHAT ==== */
+.rag-chat-panel {
+width: 360px;
+height: 520px;
+max-height: calc(100vh - 100px);
+background-color: #FFFFFF;
+border: 1px solid #E5E7EB;
+border-radius: 12px;
+box-shadow: 0 10px 30px rgba(0, 0, 0, 0.18);
+display: flex;
+flex-direction: column;
+overflow: hidden;
+animation: slideUp 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+@keyframes slideUp {
+from {
+opacity: 0;
+transform: translateY(20px) scale(0.95);
+}
+to {
+opacity: 1;
+transform: translateY(0) scale(1);
+}
+}
+
+/* Encabezado del Chat */
+.rag-chat-header {
+background-color: #800000;
+color: #FFFFFF;
+padding: 12px 16px;
+display: flex;
+align-items: center;
+justify-content: space-between;
+border-bottom: 2px solid #600000;
+}
+
+.bot-info {
+display: flex;
+align-items: center;
+gap: 10px;
+}
+
+.bot-avatar {
+background-color: rgba(255, 255, 255, 0.15);
+color: #FFFFFF;
+border-radius: 50%;
+width: 36px;
+height: 36px;
+display: flex;
+align-items: center;
+justify-content: center;
+}
+
+.bot-avatar mat-icon {
+font-size: 20px;
+width: 20px;
+height: 20px;
+}
+
+.bot-title-group {
+display: flex;
+flex-direction: column;
+}
+
+.bot-name {
+font-size: 0.9rem;
+font-weight: 700;
+margin: 0;
+line-height: 1.2;
+}
+
+.bot-status {
+font-size: 0.7rem;
+color: rgba(255, 255, 255, 0.85);
+display: flex;
+align-items: center;
+gap: 4px;
+}
+
+.status-dot {
+width: 6px;
+height: 6px;
+background-color: #22C55E;
+border-radius: 50%;
+display: inline-block;
+}
+
+.btn-close-chat {
+color: #FFFFFF !important;
+width: 32px !important;
+height: 32px !important;
+line-height: 32px !important;
+}
+
+/* Área de Mensajes */
+.rag-messages-area {
+flex: 1;
+padding: 16px;
+overflow-y: auto;
+background-color: #F8F9FA;
+display: flex;
+flex-direction: column;
+gap: 12px;
+}
+
+/* Filas de Mensaje */
+.message {
+display: flex;
+gap: 8px;
+align-items: flex-end;
+max-width: 90%;
+}
+
+.message.user {
+align-self: flex-end;
+flex-direction: row-reverse;
+}
+
+.message.bot {
+align-self: flex-start;
+}
+
+.message-avatar {
+background-color: #E5E7EB;
+color: #4B5563;
+border-radius: 50%;
+width: 28px;
+height: 28px;
+display: flex;
+align-items: center;
+justify-content: center;
+flex-shrink: 0;
+}
+
+.message-avatar mat-icon {
+font-size: 16px;
+width: 16px;
+height: 16px;
+}
+
+.message-avatar.user-avatar {
+background-color: #800000;
+color: #FFFFFF;
+}
+
+.message-content {
+display: flex;
+flex-direction: column;
+}
+
+/* Burbujas de Chat */
+.bubble {
+padding: 10px 14px;
+border-radius: 12px;
+font-size: 0.85rem;
+line-height: 1.45;
+word-break: break-word;
+box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
+}
+
+.bot-bubble {
+background-color: #FFFFFF;
+color: #1F2937;
+border: 1px solid #E5E7EB;
+border-bottom-left-radius: 2px;
+}
+
+.user-bubble {
+background-color: #800000;
+color: #FFFFFF;
+border-bottom-right-radius: 2px;
+}
+
+/* Tarjetas de Proyectos en RAG */
+.project-results-intro {
+font-size: 0.775rem;
+color: #6B7280;
+margin-bottom: 6px;
+font-weight: 600;
+}
+
+.project-cards-container {
+display: flex;
+flex-direction: column;
+gap: 8px;
+}
+
+.project-rag-card {
+background-color: #FFFFFF;
+border: 1px solid #E5E7EB;
+border-left: 3px solid #C00000;
+border-radius: 6px;
+padding: 10px;
+box-shadow: 0 1px 3px rgba(0, 0, 0, 0.04);
+}
+
+.card-tag {
+display: flex;
+align-items: center;
+gap: 4px;
+color: #C00000;
+font-size: 0.725rem;
+font-weight: 700;
+text-transform: uppercase;
+margin-bottom: 4px;
+}
+
+.card-tag-icon {
+font-size: 14px;
+width: 14px;
+height: 14px;
+}
+
+.project-card-text {
+font-size: 0.8rem;
+color: #374151;
+white-space: pre-wrap;
+line-height: 1.4;
+}
+
+/* Typing Indicator (3 Puntos Animados) */
+.typing-bubble {
+display: flex;
+align-items: center;
+gap: 4px;
+padding: 12px 16px;
+}
+
+.typing-dot {
+width: 6px;
+height: 6px;
+background-color: #9CA3AF;
+border-radius: 50%;
+animation: typingBounce 1.4s infinite ease-in-out both;
+}
+
+.typing-dot:nth-child(1) { animation-delay: -0.32s; }
+.typing-dot:nth-child(2) { animation-delay: -0.16s; }
+
+@keyframes typingBounce {
+0%, 80%, 100% { transform: scale(0); }
+40% { transform: scale(1); }
+}
+
+/* Footer de Entrada de Mensaje */
+.rag-input-footer {
+padding: 10px 12px;
+background-color: #FFFFFF;
+border-top: 1px solid #E5E7EB;
+display: flex;
+align-items: center;
+gap: 8px;
+}
+
+.rag-input-field {
+flex: 1;
+border: 1px solid #D1D5DB;
+border-radius: 20px;
+padding: 8px 14px;
+font-size: 0.85rem;
+outline: none;
+color: #1F2937;
+transition: border-color 0.2s ease;
+}
+
+.rag-input-field:focus {
+border-color: #C00000;
+}
+
+.btn-send-rag {
+background-color: #C00000 !important;
+color: #FFFFFF !important;
+width: 36px !important;
+height: 36px !important;
+}
+
+.btn-send-rag mat-icon {
+font-size: 18px;
+width: 18px;
+height: 18px;
+}
+
+.btn-send-rag[disabled] {
+background-color: #E5E7EB !important;
+color: #9CA3AF !important;
+}
+
+/* Responsividad para Teléfonos Móviles */
+@media (max-width: 480px) {
+.rag-widget-wrapper {
+right: 12px;
+bottom: 12px;
+}
+
+.rag-chat-panel {
+width: calc(100vw - 24px);
+height: calc(100vh - 80px);
+}
+}

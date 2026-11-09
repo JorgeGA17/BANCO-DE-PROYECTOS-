@@ -1,0 +1,183 @@
+<!-- Tarjeta Principal: Cabecera e Información General -->
+<mat-card class="institutional-card">
+  
+  <!-- Top Action Toolbar -->
+  <div class="top-toolbar">
+    <button mat-button class="btn-back" (click)="volver()">
+      <mat-icon>arrow_back</mat-icon>
+      Volver a la lista
+    </button>
+    <span class="status-badge" [class.active]="proyecto.nombreEstado">
+      <mat-icon class="status-icon">verified</mat-icon>
+      {{ proyecto.nombreEstado || 'En Evaluación' }}
+    </span>
+  </div>
+
+  <mat-card-header class="project-header">
+    <div mat-card-avatar class="header-avatar-icon">
+      <mat-icon>assignment</mat-icon>
+    </div>
+    <div class="header-text-group">
+      <div class="corte-tag">
+        <mat-icon>account_balance</mat-icon>
+        {{ proyecto.nombreCorte }}
+      </div>
+      <h1 class="project-title">{{ proyecto.xnombreProyecto }}</h1>
+    </div>
+  </mat-card-header>
+
+  <mat-divider></mat-divider>
+
+  <mat-card-content class="project-body">
+    
+    <!-- Grid de Información Clave -->
+    <div class="info-sections-grid">
+      
+      <!-- Bloque 1: Resumen -->
+      <div class="info-block full-width" *ngIf="proyecto.xresumen">
+        <h3 class="block-title">
+          <mat-icon>subject</mat-icon>
+          Resumen Ejecutivo
+        </h3>
+        <p class="block-content text-justify">{{ proyecto.xresumen }}</p>
+      </div>
+
+      <!-- Bloque 2: Problemática -->
+      <div class="info-block" *ngIf="proyecto.xproblematica">
+        <h3 class="block-title">
+          <mat-icon>warning_amber</mat-icon>
+          Problemática Identificada
+        </h3>
+        <p class="block-content text-justify">{{ proyecto.xproblematica }}</p>
+      </div>
+
+      <!-- Bloque 3: Objetivo General -->
+      <div class="info-block" *ngIf="proyecto.xobjetivoGeneral">
+        <h3 class="block-title">
+          <mat-icon>track_changes</mat-icon>
+          Objetivo General
+        </h3>
+        <p class="block-content text-justify">{{ proyecto.xobjetivoGeneral }}</p>
+      </div>
+
+    </div>
+
+    <!-- Seccion: Clasificación y Categorización -->
+    <div class="classification-section">
+      <h2 class="section-title">
+        <mat-icon>category</mat-icon>
+        Clasificación y Alcance Jurisdiccional
+      </h2>
+
+      <div class="chips-group-grid">
+        
+        <!-- Ejes -->
+        <div class="chip-category" *ngIf="proyecto.listaNombresEjes?.length">
+          <span class="category-label">Eje(s) Estratégico(s):</span>
+          <div class="chips-wrapper">
+            <span class="pj-chip primary-chip" *ngFor="let eje of proyecto.listaNombresEjes">
+              {{ eje }}
+            </span>
+          </div>
+        </div>
+
+        <!-- Especialidades -->
+        <div class="chip-category" *ngIf="proyecto.listaNombresEspecialidades?.length">
+          <span class="category-label">Especialidad(es):</span>
+          <div class="chips-wrapper">
+            <span class="pj-chip" *ngFor="let especialidad of proyecto.listaNombresEspecialidades">
+              {{ especialidad }}
+            </span>
+          </div>
+        </div>
+
+        <!-- Órganos Jurisdiccionales -->
+        <div class="chip-category" *ngIf="proyecto.listaNombresJerarquias?.length">
+          <span class="category-label">Órganos Jurisdiccionales:</span>
+          <div class="chips-wrapper">
+            <span class="pj-chip" *ngFor="let jerarquia of proyecto.listaNombresJerarquias">
+              {{ jerarquia }}
+            </span>
+          </div>
+        </div>
+
+        <!-- Palabras Clave -->
+        <div class="chip-category" *ngIf="proyecto.listaNombresEtiquetas?.length">
+          <span class="category-label">Palabras Clave:</span>
+          <div class="chips-wrapper">
+            <span class="pj-chip tag-chip" *ngFor="let etiqueta of proyecto.listaNombresEtiquetas">
+              #{{ etiqueta }}
+            </span>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- Sección: Evaluaciones Cualitativas -->
+    <div class="evaluations-section" *ngIf="proyecto.xinnovacion || proyecto.ximpacto || proyecto.xreplicabilidad || proyecto.xsostenibilidad">
+      <h2 class="section-title">
+        <mat-icon>fact_check</mat-icon>
+        Evaluación Técnica del Proyecto
+      </h2>
+
+      <div class="evaluations-grid">
+        
+        <div class="eval-card" *ngIf="proyecto.xinnovacion">
+          <div class="eval-header">
+            <mat-icon class="eval-icon">lightbulb</mat-icon>
+            <span>Innovación</span>
+          </div>
+          <p class="eval-text">{{ proyecto.xinnovacion }}</p>
+        </div>
+
+        <div class="eval-card" *ngIf="proyecto.ximpacto">
+          <div class="eval-header">
+            <mat-icon class="eval-icon">insights</mat-icon>
+            <span>Impacto</span>
+          </div>
+          <p class="eval-text">{{ proyecto.ximpacto }}</p>
+        </div>
+
+        <div class="eval-card" *ngIf="proyecto.xreplicabilidad">
+          <div class="eval-header">
+            <mat-icon class="eval-icon">content_copy</mat-icon>
+            <span>Replicabilidad</span>
+          </div>
+          <p class="eval-text">{{ proyecto.xreplicabilidad }}</p>
+        </div>
+
+        <div class="eval-card" *ngIf="proyecto.xsostenibilidad">
+          <div class="eval-header">
+            <mat-icon class="eval-icon">eco</mat-icon>
+            <span>Sostenibilidad</span>
+          </div>
+          <p class="eval-text">{{ proyecto.xsostenibilidad }}</p>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- Sección: Descarga Ficha Técnica -->
+    <div class="document-section">
+      <div class="download-card">
+        <div class="download-info">
+          <mat-icon class="pdf-icon">picture_as_pdf</mat-icon>
+          <div>
+            <h4 class="download-title">Ficha Técnica Oficial (PDF)</h4>
+            <p class="download-subtitle">Descargue el documento sustentatorio completo del proyecto</p>
+          </div>
+        </div>
+        <a 
+          mat-stroked-button 
+          class="btn-download" 
+          [href]="archivosProyectosPath + proyecto.xnombreProyecto + '.pdf'" 
+          target="_blank">
+          <mat-icon>download</mat-icon>
+          Descargar Ficha
+        </a>
+      </div>
+    </div>
+
+  </mat-card-content>
+</mat-card>

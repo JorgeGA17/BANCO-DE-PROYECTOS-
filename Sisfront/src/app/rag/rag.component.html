@@ -1,0 +1,148 @@
+<div class="rag-widget-wrapper">
+
+  <!-- Botón Flotante (FAB) Institucional -->
+  <button 
+    *ngIf="!open" 
+    type="button"
+    class="rag-fab-btn" 
+    (click)="toggleChat()"
+    matTooltip="Asistente Virtual IA - Consultas RAG"
+    matTooltipPosition="left">
+    <mat-icon class="fab-icon">smart_toy</mat-icon>
+    <span class="fab-text">Asistente IA</span>
+    <span class="fab-badge">RAG</span>
+  </button>
+
+  <!-- Ventana Flotante del Chatbot -->
+  <div class="rag-chat-panel" *ngIf="open" [class.is-animating]="open">
+    
+    <!-- Encabezado Institucional -->
+    <div class="rag-chat-header">
+      <div class="bot-info">
+        <div class="bot-avatar">
+          <mat-icon>psychology</mat-icon>
+        </div>
+        <div class="bot-title-group">
+          <h3 class="bot-name">Asistente Virtual PJ</h3>
+          <span class="bot-status">
+            <span class="status-dot"></span>
+            En línea | RAG Inteligencia Artificial
+          </span>
+        </div>
+      </div>
+      
+      <button 
+        mat-icon-button 
+        type="button"
+        class="btn-close-chat" 
+        (click)="toggleChat()"
+        aria-label="Cerrar ventana de chat">
+        <mat-icon>close</mat-icon>
+      </button>
+    </div>
+
+    <!-- Área de Mensajes de Conversación -->
+    <div class="rag-messages-area" #messagesArea>
+      
+      <!-- Mensaje Inicial de Bienvenida si no hay interacción -->
+      <div class="message bot" *ngIf="messages.length === 0">
+        <div class="message-avatar">
+          <mat-icon>smart_toy</mat-icon>
+        </div>
+        <div class="message-content">
+          <div class="bubble bot-bubble">
+            ¡Hola! 👋 Soy el asistente de Inteligencia Artificial del Banco de Proyectos. ¿En qué puedo ayudarte hoy? Puedes preguntarme sobre proyectos, buenas prácticas o consultar por Corte Superior.
+          </div>
+        </div>
+      </div>
+
+      <!-- Bucle de Mensajes -->
+      <div 
+        *ngFor="let m of messages" 
+        class="message" 
+        [ngClass]="{ 'user': m.role === 'user', 'bot': m.role === 'bot' }">
+        
+        <!-- Avatar del emisor -->
+        <div class="message-avatar" *ngIf="m.role === 'bot'">
+          <mat-icon>smart_toy</mat-icon>
+        </div>
+
+        <div class="message-content">
+          
+          <!-- Mensaje del Usuario -->
+          <div *ngIf="m.role === 'user'" class="bubble user-bubble">
+            {{ m.text }}
+          </div>
+
+          <!-- Mensaje del Bot (Respuesta Simple o Lista de Proyectos) -->
+          <div *ngIf="m.role === 'bot'">
+            
+            <!-- Si la respuesta contiene tarjetas/items de proyectos -->
+            <div *ngIf="m.items && m.items.length > 0; else plainBotText">
+              <div class="project-results-intro">
+                Se encontraron los siguientes proyectos relacionados:
+              </div>
+              <div class="project-cards-container">
+                <div *ngFor="let itemText of m.items" class="project-rag-card">
+                  <div class="card-tag">
+                    <mat-icon class="card-tag-icon">folder_special</mat-icon>
+                    <span>Ficha de Proyecto</span>
+                  </div>
+                  <div class="project-card-text">{{ itemText }}</div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Si es texto plano -->
+            <ng-template #plainBotText>
+              <div class="bubble bot-bubble">{{ m.text }}</div>
+            </ng-template>
+
+          </div>
+
+        </div>
+
+        <div class="message-avatar user-avatar" *ngIf="m.role === 'user'">
+          <mat-icon>person</mat-icon>
+        </div>
+
+      </div>
+
+      <!-- Indicador de Carga / Typing Indicator -->
+      <div class="message bot typing-indicator-wrapper" *ngIf="loading">
+        <div class="message-avatar">
+          <mat-icon>smart_toy</mat-icon>
+        </div>
+        <div class="bubble bot-bubble typing-bubble">
+          <span class="typing-dot"></span>
+          <span class="typing-dot"></span>
+          <span class="typing-dot"></span>
+        </div>
+      </div>
+
+      <div #messagesEnd></div>
+    </div>
+
+    <!-- Barra de Entrada de Texto -->
+    <div class="rag-input-footer">
+      <input 
+        type="text"
+        class="rag-input-field"
+        [(ngModel)]="inputText" 
+        (keyup.enter)="sendMessage()" 
+        placeholder="Haz una pregunta al asistente RAG..."
+        [disabled]="loading" />
+      
+      <button 
+        type="button"
+        mat-mini-fab 
+        class="btn-send-rag" 
+        (click)="sendMessage()" 
+        [disabled]="loading || !inputText.trim()">
+        <mat-icon>send</mat-icon>
+      </button>
+    </div>
+
+  </div>
+
+</div>

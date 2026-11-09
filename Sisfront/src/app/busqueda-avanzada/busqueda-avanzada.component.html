@@ -1,0 +1,204 @@
+<main class="search-advanced-container">
+  <div class="search-advanced-wrapper">
+
+    <mat-card class="institutional-card">
+      
+      <!-- Cabecera Institucional -->
+      <mat-card-header class="card-header">
+        <div mat-card-avatar class="header-avatar-icon">
+          <mat-icon>manage_search</mat-icon>
+        </div>
+        <div class="header-text-group">
+          <mat-card-title class="card-title">Búsqueda Avanzada de Proyectos</mat-card-title>
+          <mat-card-subtitle class="card-subtitle">
+            Filtre las iniciativas judiciales mediante múltiples criterios de selección combinados
+          </mat-card-subtitle>
+        </div>
+      </mat-card-header>
+
+      <mat-card-content class="card-body">
+
+        <!-- PANEL DE FILTROS EN GRID -->
+        <div class="filters-panel">
+          <div class="panel-header">
+            <span class="panel-title">
+              <mat-icon class="panel-icon">filter_list</mat-icon>
+              Parámetros de Búsqueda
+            </span>
+            <button 
+              mat-stroked-button 
+              class="btn-reset" 
+              (click)="reiniciarBusqueda()">
+              <mat-icon>refresh</mat-icon>
+              Reiniciar filtros
+            </button>
+          </div>
+
+          <div class="filters-grid">
+
+            <!-- Corte Superior -->
+            <mat-form-field appearance="outline" class="filter-field">
+              <mat-label>Corte Superior de Justicia</mat-label>
+              <mat-select [(ngModel)]="corteSeleccionada" (selectionChange)="filtrarProyectos()">
+                <mat-option [value]="undefined">Todas las Cortes</mat-option>
+                <mat-option *ngFor="let corte of cortes" [value]="corte.cortePk">
+                  {{ corte.xnombre }}
+                </mat-option>
+              </mat-select>
+              <mat-icon matPrefix color="primary">account_balance</mat-icon>
+            </mat-form-field>
+
+            <!-- Jerarquía / Órganos -->
+            <mat-form-field appearance="outline" class="filter-field">
+              <mat-label>Jerarquía / Órgano</mat-label>
+              <mat-select [(ngModel)]="jerarquiaSeleccionada" (selectionChange)="filtrarProyectos()">
+                <mat-option [value]="undefined">Todas las jerarquías</mat-option>
+                <mat-option *ngFor="let jerarquia of jerarquias" [value]="jerarquia.jerarquiaPk">
+                  {{ jerarquia.xnombre }}
+                </mat-option>
+              </mat-select>
+              <mat-icon matPrefix color="primary">gavel</mat-icon>
+            </mat-form-field>
+
+            <!-- Especialidad -->
+            <mat-form-field appearance="outline" class="filter-field">
+              <mat-label>Especialidad</mat-label>
+              <mat-select [(ngModel)]="especialidadSeleccionada" (selectionChange)="filtrarProyectos()">
+                <mat-option [value]="undefined">Todas las especialidades</mat-option>
+                <mat-option *ngFor="let especialidad of especialidades" [value]="especialidad.especialidadPk">
+                  {{ especialidad.xnombre }}
+                </mat-option>
+              </mat-select>
+              <mat-icon matPrefix color="primary">balance</mat-icon>
+            </mat-form-field>
+
+            <!-- Eje Estratégico -->
+            <mat-form-field appearance="outline" class="filter-field">
+              <mat-label>Eje Estratégico</mat-label>
+              <mat-select [(ngModel)]="ejeSeleccionado" (selectionChange)="filtrarProyectos()">
+                <mat-option [value]="undefined">Todos los ejes</mat-option>
+                <mat-option *ngFor="let eje of ejes" [value]="eje.ejePk">
+                  {{ eje.xnombre }}
+                </mat-option>
+              </mat-select>
+              <mat-icon matPrefix color="primary">alt_route</mat-icon>
+            </mat-form-field>
+
+            <!-- Estado -->
+            <mat-form-field appearance="outline" class="filter-field">
+              <mat-label>Estado del Proyecto</mat-label>
+              <mat-select [(ngModel)]="estadoSeleccionado" (selectionChange)="filtrarProyectos()">
+                <mat-option [value]="undefined">Todos los estados</mat-option>
+                <mat-option *ngFor="let estado of estados" [value]="estado.estadoPk">
+                  {{ estado.xnombre }}
+                </mat-option>
+              </mat-select>
+              <mat-icon matPrefix color="primary">flag</mat-icon>
+            </mat-form-field>
+
+            <!-- Palabra Clave / Etiqueta -->
+            <mat-form-field appearance="outline" class="filter-field">
+              <mat-label>Palabra Clave</mat-label>
+              <mat-select [(ngModel)]="etiquetaSeleccionada" (selectionChange)="filtrarProyectos()">
+                <mat-option [value]="undefined">Todas las etiquetas</mat-option>
+                <mat-option *ngFor="let etiqueta of etiquetas" [value]="etiqueta.etiquetaPk">
+                  {{ etiqueta.xnombre }}
+                </mat-option>
+              </mat-select>
+              <mat-icon matPrefix color="primary">label</mat-icon>
+            </mat-form-field>
+
+          </div>
+        </div>
+
+        <mat-divider class="section-divider"></mat-divider>
+
+        <!-- SECCIÓN DE RESULTADOS -->
+        <div class="results-header">
+          <div class="results-title-group">
+            <mat-icon class="results-icon">view_list</mat-icon>
+            <h2 class="results-title">Resultados Coincidentes</h2>
+          </div>
+          <div class="results-badge" *ngIf="proyectosFiltrados">
+            <span class="badge-label">Total encontrados:</span>
+            <span class="badge-count">{{ proyectosFiltrados.length }}</span>
+          </div>
+        </div>
+ <!-- TABLA DE RESULTADOS (DESKTOP) -->
+        <div class="table-container desktop-table-view">
+          <table class="pj-table">
+            <thead>
+              <tr>
+                <th scope="col" class="col-name">Nombre del Proyecto</th>
+                <th scope="col" class="col-corte">Corte Superior (CSJ)</th>
+                <th scope="col" class="col-status">Estado</th>
+                <th scope="col" class="col-action">Acción</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let proyecto of proyectosFiltrados">
+                <td class="col-name cell-bold">{{ proyecto.xnombreProyecto }}</td>
+                <td class="col-corte">
+                  <span class="corte-chip">{{ proyecto.nombreCorte }}</span>
+                </td>
+                <td class="col-status">
+                  <span class="status-pill">{{ proyecto.nombreEstado || 'En Evaluación' }}</span>
+                </td>
+                <td class="col-action">
+                  <button 
+                    mat-raised-button 
+                    class="btn-pj-primary" 
+                    [routerLink]="['/detalle-proyecto', proyecto.proyectoPk]">
+                    <mat-icon>visibility</mat-icon>
+                    Ver detalle
+                  </button>
+                </td>
+              </tr>
+
+              <!-- Estado Vacío -->
+              <tr *ngIf="proyectosFiltrados && proyectosFiltrados.length === 0">
+                <td colspan="4" class="empty-state-cell">
+                  <mat-icon class="empty-icon">search_off</mat-icon>
+                  <p class="empty-title">No se encontraron proyectos con los filtros seleccionados</p>
+                  <p class="empty-subtitle">Intente modificar los criterios de selección o reinicie la búsqueda.</p>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <!-- VISTA MÓVIL: Tarjetas Dinámicas Adaptativas -->
+        <div class="mobile-cards-view">
+          <div 
+            *ngFor="let proyecto of proyectosFiltrados" 
+            class="mobile-project-card">
+            
+            <div class="mobile-card-header">
+              <span class="corte-chip">{{ proyecto.nombreCorte }}</span>
+              <span class="status-pill">{{ proyecto.nombreEstado || 'En Evaluación' }}</span>
+            </div>
+
+            <h3 class="mobile-project-title">{{ proyecto.xnombreProyecto }}</h3>
+
+            <div class="mobile-card-actions">
+              <button 
+                mat-raised-button 
+                class="btn-pj-primary full-width-btn" 
+                [routerLink]="['/detalle-proyecto', proyecto.proyectoPk]">
+                <mat-icon>visibility</mat-icon>
+                Ver detalle
+              </button>
+            </div>
+          </div>
+
+          <div *ngIf="proyectosFiltrados && proyectosFiltrados.length === 0" class="mobile-empty-state">
+            <mat-icon class="empty-icon">search_off</mat-icon>
+            <p class="empty-title">No se encontraron proyectos</p>
+          </div>
+        </div>
+
+      </mat-card-content>
+    </mat-card>
+
+  </div>
+</main>

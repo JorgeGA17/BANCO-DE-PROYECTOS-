@@ -1,0 +1,87 @@
+<main class="login-container">
+  <div class="login-content-wrapper">
+
+    <mat-card class="institutional-login-card">
+      
+      <!-- Encabezado Institucional -->
+      <div class="card-header">
+        <div class="header-avatar-icon">
+          <mat-icon>lock_person</mat-icon>
+        </div>
+        <h1 class="header-title">Acceso al Sistema</h1>
+        <p class="header-subtitle">Banco de Proyectos y Buenas Prácticas - UGDJ</p>
+      </div>
+
+      <mat-card-content class="card-body">
+        
+        <form class="login-form" [formGroup]="loginForm" (ngSubmit)="onSubmit()">
+            
+          <!-- Campo: Usuario / Correo Institucional -->
+          <mat-form-field appearance="outline" class="full-width-field">
+            <mat-label>Correo Institucional</mat-label>
+            <input 
+              matInput 
+              type="email" 
+              id="usuario" 
+              formControlName="xcorreoInstitucional" 
+              placeholder="ejemplo@pj.gob.pe">
+            <mat-icon matPrefix class="field-icon">email</mat-icon>
+            
+            <mat-error *ngIf="loginForm.controls['xcorreoInstitucional'].hasError('required')">
+              El correo es obligatorio.
+            </mat-error>
+            <mat-error *ngIf="loginForm.controls['xcorreoInstitucional'].hasError('email')">
+              El formato del correo es inválido.
+            </mat-error>
+          </mat-form-field>
+
+          <!-- Campo: Contraseña -->
+          <mat-form-field appearance="outline" class="full-width-field">
+            <mat-label>Contraseña</mat-label>
+            <input 
+              matInput 
+              [type]="hidePassword ? 'password' : 'text'" 
+              id="contrasena" 
+              formControlName="password" 
+              placeholder="Ingrese su contraseña">
+            <mat-icon matPrefix class="field-icon">lock</mat-icon>
+            <button 
+              type="button" 
+              mat-icon-button 
+              matSuffix 
+              (click)="hidePassword = !hidePassword" 
+              [attr.aria-label]="'Ocultar contraseña'" 
+              [attr.aria-pressed]="hidePassword">
+              <mat-icon>{{ hidePassword ? 'visibility_off' : 'visibility' }}</mat-icon>
+            </button>
+            
+            <mat-error *ngIf="loginForm.controls['password'].hasError('required')">
+              La contraseña es obligatoria.
+            </mat-error>
+          </mat-form-field>
+
+          <!-- Botón de Envío -->
+          <button 
+            type="submit" 
+            mat-raised-button 
+            class="btn-pj-login" 
+            [disabled]="!loginForm.valid">
+            <mat-icon>vpn_key</mat-icon>
+            ACCEDER AL SISTEMA
+          </button>
+
+          <!-- Enlace Recuperar Contraseña -->
+          <div class="forgot-wrapper">
+            <a href="#" class="forgot-password" (click)="$event.preventDefault(); recuperarContrasena()">
+              <mat-icon class="forgot-icon">help_outline</mat-icon>
+              ¿Olvidó su contraseña?
+            </a>
+          </div>
+
+        </form>
+
+      </mat-card-content>
+    </mat-card>
+
+  </div>
+</main>

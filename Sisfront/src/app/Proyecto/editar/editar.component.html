@@ -1,0 +1,154 @@
+<main class="management-container">
+  <div class="management-content-wrapper">
+
+    <mat-card class="institutional-card">
+      
+      <!-- Cabecera Institucional -->
+      <mat-card-header class="card-header">
+        <div mat-card-avatar class="header-avatar-icon">
+          <mat-icon>edit_calendar</mat-icon>
+        </div>
+        <div class="header-text-group">
+          <mat-card-title class="card-title">Gestión y Edición de Proyectos</mat-card-title>
+          <mat-card-subtitle class="card-subtitle">
+            Seleccione el proyecto o buena práctica a modificar en el sistema
+          </mat-card-subtitle>
+        </div>
+      </mat-card-header>
+
+      <mat-card-content class="card-body">
+        
+        <!-- Toolbar de Búsqueda -->
+        <div class="search-toolbar">
+          <mat-form-field appearance="outline" class="search-field">
+            <mat-label>Buscar por nombre o Corte Superior...</mat-label>
+            <mat-icon matPrefix class="search-icon-color">search</mat-icon>
+            <input 
+              matInput 
+              type="text" 
+              [(ngModel)]="searchText" 
+              (ngModelChange)="buscar()" 
+              placeholder="Ej. Notificaciones, Lima, Registro...">
+            <button 
+              *ngIf="searchText" 
+              matSuffix 
+              mat-icon-button 
+              aria-label="Limpiar búsqueda" 
+              (click)="searchText=''; buscar()">
+              <mat-icon>close</mat-icon>
+            </button>
+          </mat-form-field>
+
+          <div class="results-badge" *ngIf="filteredProyectos()">
+            <span class="badge-label">Total a editar:</span>
+            <span class="badge-count">{{ filteredProyectos().length }}</span>
+          </div>
+        </div>
+
+        <!-- VISTA ESCRITORIO: Tabla Minimalista -->
+        <div class="table-container desktop-table-view">
+          <table class="pj-table">
+            <thead>
+              <tr>
+                <th scope="col" class="col-id">ID</th>
+                <th scope="col" class="col-name">Nombre del Proyecto</th>
+                <th scope="col" class="col-corte">Corte Superior (CSJ)</th>
+                <th scope="col" class="col-action">Acción</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let proyecto of filteredProyectos() | paginate: { itemsPerPage: noOfRows, currentPage: page }">
+                
+                <td class="col-id">
+                  <span class="id-badge">#{{ proyecto.proyectoPk }}</span>
+                </td>
+
+                <td class="col-name cell-bold">
+                  {{ proyecto.xnombreProyecto }}
+                </td>
+
+                <td class="col-corte">
+                  <span class="corte-chip">
+                    {{ proyecto.nombreCorte }}
+                  </span>
+                </td>
+
+                <td class="col-action">
+                  <button 
+                    mat-stroked-button 
+                    class="btn-pj-edit" 
+                    (click)="editarProyecto(proyecto.proyectoPk)">
+                    <mat-icon>edit</mat-icon>
+                    Editar
+                  </button>
+                </td>
+
+              </tr>
+
+              <tr *ngIf="filteredProyectos() && filteredProyectos().length === 0">
+                <td colspan="4" class="empty-state-cell">
+                  <mat-icon class="empty-icon">search_off</mat-icon>
+                  <p class="empty-title">No se encontraron proyectos para editar</p>
+                  <p class="empty-subtitle">Verifique el término de búsqueda ingresado.</p>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <!-- VISTA MÓVIL: Tarjetas Dinámicas -->
+        <div class="mobile-cards-view">
+          <div 
+            *ngFor="let proyecto of filteredProyectos() | paginate: { itemsPerPage: noOfRows, currentPage: page }" 
+            class="mobile-project-card">
+            
+            <div class="mobile-card-top">
+              <span class="id-badge">#{{ proyecto.proyectoPk }}</span>
+              <span class="corte-chip">{{ proyecto.nombreCorte }}</span>
+            </div>
+
+            <h3 class="mobile-project-title">{{ proyecto.xnombreProyecto }}</h3>
+
+            <div class="mobile-card-actions">
+              <button 
+                mat-raised-button 
+                class="btn-pj-edit full-width-btn" 
+                (click)="editarProyecto(proyecto.proyectoPk)">
+                <mat-icon>edit</mat-icon>
+                Editar Proyecto
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Paginación -->
+        <div class="pagination-section">
+          
+          <div class="page-size-selector">
+            <span class="selector-label">Mostrar por página:</span>
+            <select class="rows-select" name="noRows" id="noRows" (change)="page=1" [(ngModel)]="noOfRows">
+              <option value="5">5</option>
+              <option value="10">10</option>
+              <option value="15">15</option>
+            </select>
+          </div>
+
+          <pagination-controls 
+            (pageChange)="page = $event"
+            previousLabel="Anterior"
+            nextLabel="Siguiente">
+          </pagination-controls>
+
+          <pagination-template #p="paginationApi" (pageChange)="page=$event">
+            <div class="page-counter-info">
+              Mostrando <strong>{{ getStartIndex(p.getCurrent(), p.getLastPage()) }}</strong> - <strong>{{ getLastIndex(p.getCurrent(), p.getLastPage()) }}</strong> de <strong>{{ datas?.length }}</strong>
+            </div>
+          </pagination-template>
+
+        </div>
+
+      </mat-card-content>
+    </mat-card>
+
+  </div>
+</main>

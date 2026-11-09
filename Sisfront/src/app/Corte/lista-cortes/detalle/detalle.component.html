@@ -1,0 +1,161 @@
+<!-- Ficha Principal de la Corte Superior -->
+<mat-card class="institutional-card">
+  
+  <!-- Top Action Toolbar -->
+  <div class="top-toolbar">
+    <button mat-button class="btn-back" [routerLink]="['/lista-cortes']">
+      <mat-icon>arrow_back</mat-icon>
+      Volver a Cortes
+    </button>
+    <span class="corte-name-badge">
+      <mat-icon>account_balance</mat-icon>
+      {{ filtro || 'Corte Superior' }}
+    </span>
+  </div>
+
+  <mat-card-content class="card-body">
+    
+    <!-- SECCIÓN SUPERIOR: PRESIDENTE + COMISIÓN DISTRITAL -->
+    <div class="corte-top-grid">
+
+      <!-- Card de Presidente / Autoridad -->
+      <div class="president-section">
+        <div class="section-header-sm">
+          <mat-icon class="section-icon">gavel</mat-icon>
+          <span>Presidencia de la Corte</span>
+        </div>
+
+        <div class="president-card" *ngFor="let presidente of presidentes">
+          <div class="president-photo-wrapper">
+            <img 
+              [src]="presidente.fotoUrl" 
+              [alt]="presidente.personalNombre" 
+              class="president-img"
+              (error)="presidente.fotoUrl='assets/carrusel/palacio1.jpg'">
+          </div>
+          <div class="president-info">
+            <span class="role-tag">Presidente(a) de Corte</span>
+            <h2 class="president-name">{{ presidente.personalNombre }}</h2>
+            <p class="president-corte">{{ presidente.corteNombre }}</p>
+          </div>
+        </div>
+
+        <div *ngIf="!presidentes || presidentes.length === 0" class="empty-president">
+          <mat-icon>person_off</mat-icon>
+          <span>Sin información registrada del Presidente</span>
+        </div>
+      </div>
+
+      <!-- Card de Comisión Distrital -->
+      <div class="comision-section">
+        <div class="section-header-sm">
+          <mat-icon class="section-icon">groups</mat-icon>
+          <span>Comisión Distrital de Gestión de Despacho Judicial</span>
+        </div>
+
+        <div class="table-container comision-table-wrapper">
+          <table class="pj-table">
+            <thead>
+              <tr>
+                <th scope="col">Integrante</th>
+                <th scope="col">Rol / Cargo</th>
+                <th scope="col">Correo Institucional</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let miembro of miembros">
+                <td class="cell-bold">{{ miembro.personalNombre }}</td>
+                <td><span class="role-badge">{{ miembro.cargoNombre }}</span></td>
+                <td class="email-cell">{{ miembro.personalCorreo || 'N/A' }}</td>
+              </tr>
+              <tr *ngIf="!miembros || miembros.length === 0">
+                <td colspan="3" class="empty-table-text">
+                  No hay integrantes registrados en esta comisión.
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <!-- Descargar Resolución -->
+        <div class="resolution-download-bar">
+          <div class="res-info">
+            <mat-icon class="pdf-icon">picture_as_pdf</mat-icon>
+            <span>Resolución de Conformación de la Comisión</span>
+          </div>
+          <a 
+            mat-stroked-button 
+            class="btn-download-res" 
+            [href]="getArchivoComisionUrl(filtro)" 
+            target="_blank">
+            <mat-icon>download</mat-icon>
+            Ver Resolución
+          </a>
+        </div>
+
+      </div>
+
+    </div>
+
+    <mat-divider class="section-divider"></mat-divider>
+
+    <!-- SECCIÓN INFERIOR: PROYECTOS Y BUENAS PRÁCTICAS DE LA CORTE -->
+    <div class="proyectos-corte-section">
+      <div class="section-header-lg">
+        <div class="header-left">
+          <mat-icon class="section-icon-lg">folder_special</mat-icon>
+          <div>
+            <h2 class="section-title">Proyectos de la Corte Superior</h2>
+            <p class="section-subtitle">Proyectos y buenas prácticas presentadas por {{ filtro }}</p>
+          </div>
+        </div>
+        <div class="count-badge" *ngIf="proyectos">
+          Registrados: <strong>{{ proyectos.length }}</strong>
+        </div>
+      </div>
+
+      <!-- Tabla de Proyectos -->
+      <div class="table-container">
+        <table class="pj-table">
+          <thead>
+            <tr>
+              <th scope="col" class="col-name">Nombre del Proyecto</th>
+              <th scope="col" class="col-corte">Corte Superior</th>
+              <th scope="col" class="col-status">Estado</th>
+              <th scope="col" class="col-action">Acción</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let proyecto of proyectos">
+              <td class="col-name cell-bold">{{ proyecto.xnombreProyecto }}</td>
+              <td class="col-corte">
+                <span class="corte-chip">{{ proyecto.nombreCorte }}</span>
+              </td>
+              <td class="col-status">
+                <span class="status-pill">{{ proyecto.nombreEstado || 'En Evaluación' }}</span>
+              </td>
+              <td class="col-action">
+                <button 
+                  mat-raised-button 
+                  class="btn-pj-primary" 
+                  [routerLink]="['/detalle-proyecto', proyecto.proyectoPk]">
+                  <mat-icon>visibility</mat-icon>
+                  Ver detalle
+                </button>
+              </td>
+            </tr>
+
+            <tr *ngIf="!proyectos || proyectos.length === 0">
+              <td colspan="4" class="empty-state-cell">
+                <mat-icon class="empty-icon">folder_off</mat-icon>
+                <p class="empty-title">Esta Corte no registra proyectos actualmente</p>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+    </div>
+
+  </mat-card-content>
+</mat-card>

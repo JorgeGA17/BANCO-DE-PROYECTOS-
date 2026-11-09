@@ -1,0 +1,107 @@
+<app-slider></app-slider>
+
+<main class="ugdj-container">
+  <div class="ugdj-content-wrapper">
+
+    <!-- SECCIÓN 1: CABECERA E INFORMACIÓN GENERAL -->
+    <mat-card class="ugdj-card hero-card">
+      <mat-card-header>
+        <div mat-card-avatar class="header-avatar-icon">
+          <mat-icon color="primary">account_balance</mat-icon>
+        </div>
+        <mat-card-title class="mat-headline-5 text-bold">
+          Unidad de Gestión de Despacho Judicial
+        </mat-card-title>
+        <mat-card-subtitle class="mat-body-2">
+          Órgano de Apoyo del Consejo Ejecutivo del Poder Judicial
+        </mat-card-subtitle>
+      </mat-card-header>
+
+      <mat-card-content class="hero-content">
+        <p class="mat-body-1 description-text">
+          Es el órgano de apoyo del Consejo Ejecutivo del Poder Judicial encargado de gestionar y efectuar el seguimiento de la ejecución de los proyectos orientados a la mejora en la gestión del Despacho Judicial formulados por la Gerencia General y Cortes Superiores, así como promover la implementación del sistema de gestión institucional.
+        </p>
+      </mat-card-content>
+    </mat-card>
+
+    <!-- SECCIÓN 2: CONFORMACIÓN DE LA UGDJ (MAT-TABLE) -->
+    <mat-card class="ugdj-card">
+      <mat-card-header class="section-header">
+        <mat-icon class="section-icon" color="primary">groups</mat-icon>
+        <div>
+          <mat-card-title class="mat-title-large">Conformación de la UGDJ</mat-card-title>
+          <mat-card-subtitle>Directorio del equipo técnico y administrativo</mat-card-subtitle>
+        </div>
+      </mat-card-header>
+
+      <mat-card-content class="table-container">
+        <table mat-table [dataSource]="dataSource" class="mat-elevation-z0 institutional-table">
+
+          <!-- Columna Nombre -->
+          <ng-container matColumnDef="nombre">
+            <th mat-header-cell *matHeaderCellDef class="table-header-cell"> Nombres y Apellidos </th>
+            <td mat-cell *matCellDef="let element" class="table-body-cell cell-bold"> 
+              {{element.nombre}} 
+            </td>
+          </ng-container>
+
+          <!-- Columna Cargo -->
+          <ng-container matColumnDef="cargo">
+            <th mat-header-cell *matHeaderCellDef class="table-header-cell"> Cargo Institucional </th>
+            <td mat-cell *matCellDef="let element" class="table-body-cell"> 
+              <span class="role-badge">{{element.cargo}}</span>
+            </td>
+          </ng-container>
+
+          <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+          <tr mat-row *matRowDef="let row; columns: displayedColumns;" class="table-row"></tr>
+        </table>
+      </mat-card-content>
+    </mat-card>
+
+    <!-- SECCIÓN 3: AUTORIDADES Y EVENTOS (CARDS DESTACADAS) -->
+    <div class="cards-grid">
+
+      <!-- Consejero Responsable -->
+      <mat-card class="ugdj-card feature-card">
+        <div class="feature-card-layout">
+          <div class="image-wrapper">
+            <img src="assets/ramirobustamante.jpg" alt="Dr. Ramiro Bustamante Zegarra" class="portrait-img">
+          </div>
+          <div class="feature-card-details">
+            <mat-chip-option selectable="false" color="primary" selected class="institutional-chip">
+              <mat-icon>gavel</mat-icon> Liderazgo Institucional
+            </mat-chip-option>
+            <h3 class="mat-headline-6 authority-title">Consejero Responsable de la UGDJ</h3>
+            <h4 class="authority-name">Dr. Ramiro Bustamante Zegarra</h4>
+            <p class="mat-body-2 text-muted">
+              Juez Supremo Titular de la Corte Suprema de Justicia de la República e integrante del Consejo Ejecutivo del Poder Judicial.
+            </p>
+          </div>
+        </div>
+      </mat-card>
+
+      <!-- Eventos Importantes -->
+      <mat-card class="ugdj-card feature-card">
+        <div class="feature-card-layout">
+          <div class="image-wrapper">
+            <img src="assets/evento.png" alt="Congreso Internacional de Modernización" class="portrait-img">
+          </div>
+          <div class="feature-card-details">
+            <mat-chip-option selectable="false" class="event-chip">
+              <mat-icon>event</mat-icon> Hito Institucional
+            </mat-chip-option>
+            <h3 class="mat-headline-6 authority-title">Eventos Importantes</h3>
+            <p class="mat-body-2 text-muted event-description">
+              <strong>Congreso Internacional de Modernización del Despacho Judicial:</strong> Realizado los días 10 y 11 de agosto de 2023 en Lima. Contó con ponentes nacionales e internacionales, dirigido a Presidentes de las 35 Cortes Superiores del país e integrantes de las Comisiones Distritales.
+            </p>
+          </div>
+        </div>
+      </mat-card>
+
+    </div>
+
+  </div>
+</main>
+
+<app-footer></app-footer>

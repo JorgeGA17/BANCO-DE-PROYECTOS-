@@ -1,0 +1,9 @@
+# ===================================================================
+# Plantilla de configuracion local para desarrolladores
+# ===================================================================
+# Para ejecutar el proyecto en tu entorno local:
+# 1. Copia este archivo y renombralo a: application-local.properties
+# 2. Reemplaza el valor de abajo con tu propia clave de Google Gemini
+# ===================================================================
+
+gemini.api.key=TU_GEMINI_API_KEY_AQUI

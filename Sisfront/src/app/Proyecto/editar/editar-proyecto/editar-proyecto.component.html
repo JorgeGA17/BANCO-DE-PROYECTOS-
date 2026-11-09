@@ -1,0 +1,232 @@
+<mat-card class="institutional-card">
+  
+  <!-- Encabezado Institucional -->
+  <mat-card-header class="card-header">
+    <div mat-card-avatar class="header-avatar-icon">
+      <mat-icon>edit_note</mat-icon>
+    </div>
+    <div class="header-text-group">
+      <mat-card-title class="card-title">Edición de Proyecto</mat-card-title>
+      <mat-card-subtitle class="card-subtitle">
+        Actualización de datos generales, categorización y personal asignado
+      </mat-card-subtitle>
+    </div>
+  </mat-card-header>
+
+  <mat-card-content class="card-body">
+    
+    <form [formGroup]="creacion" (ngSubmit)="onSubmit()" class="institutional-form">
+
+      <!-- SECCIÓN 1: DATOS PRINCIPALES DEL PROYECTO -->
+      <div class="form-section">
+        <div class="section-title-wrapper">
+          <mat-icon class="section-icon">description</mat-icon>
+          <h3 class="section-title">Información General</h3>
+        </div>
+
+        <div class="form-grid">
+          <!-- Nombre del Proyecto -->
+          <mat-form-field appearance="outline" class="col-span-full">
+            <mat-label>Nombre del Proyecto / Buena Práctica</mat-label>
+            <input matInput formControlName="xnombreProyecto" placeholder="Ej. Sistema Jurisdiccional de Trabajo - SJT">
+            <mat-icon matSuffix color="primary">edit</mat-icon>
+            <mat-error *ngIf="creacion.get('xnombreProyecto')?.hasError('required')">
+              El nombre del proyecto es obligatorio.
+            </mat-error>
+          </mat-form-field>
+
+          <!-- Problemática -->
+          <mat-form-field appearance="outline" class="col-span-full">
+            <mat-label>Problemática Identificada</mat-label>
+            <textarea matInput formControlName="xproblematica" rows="3" placeholder="Describa la problemática que dio origen al proyecto..."></textarea>
+          </mat-form-field>
+
+          <!-- Resumen -->
+          <mat-form-field appearance="outline" class="col-span-half">
+            <mat-label>Resumen Ejecutivo</mat-label>
+            <textarea matInput formControlName="xresumen" rows="3" placeholder="Síntesis técnica de la propuesta..."></textarea>
+          </mat-form-field>
+
+          <!-- Objetivo General -->
+          <mat-form-field appearance="outline" class="col-span-half">
+            <mat-label>Objetivo General</mat-label>
+            <textarea matInput formControlName="xobjetivoGeneral" rows="3" placeholder="Meta principal del proyecto..."></textarea>
+          </mat-form-field>
+        </div>
+      </div>
+
+      <mat-divider class="section-divider"></mat-divider>
+
+      <!-- SECCIÓN 2: UBICACIÓN Y CLASIFICACIÓN JURISDICCIONAL -->
+      <div class="form-section">
+        <div class="section-title-wrapper">
+          <mat-icon class="section-icon">account_balance</mat-icon>
+          <h3 class="section-title">Clasificación e Institucionalidad</h3>
+        </div>
+
+        <div class="form-grid">
+          <!-- Corte Superior -->
+          <mat-form-field appearance="outline" class="col-span-half">
+            <mat-label>Corte Superior de Justicia (CSJ)</mat-label>
+            <mat-select formControlName="corteId" placeholder="Seleccione una Corte">
+              <mat-option *ngFor="let corte of cortes" [value]="corte.cortePk">
+                {{ corte.xnombre }}
+              </mat-option>
+            </mat-select>
+            <mat-error *ngIf="creacion.get('corteId')?.hasError('required')">
+              Debe seleccionar una Corte Superior.
+            </mat-error>
+          </mat-form-field>
+
+          <!-- Estado del Proyecto -->
+          <mat-form-field appearance="outline" class="col-span-half">
+            <mat-label>Estado del Proyecto</mat-label>
+            <mat-select formControlName="estadoId" placeholder="Seleccione el estado">
+              <mat-option *ngFor="let estado of estados" [value]="estado.estadoPk">
+                {{ estado.xnombre }}
+              </mat-option>
+            </mat-select>
+            <mat-error *ngIf="creacion.get('estadoId')?.hasError('required')">
+              Debe seleccionar un estado.
+            </mat-error>
+          </mat-form-field>
+
+          <!-- Especialidades (Multi-Select con Chips) -->
+          <mat-form-field appearance="outline" class="col-span-half">
+            <mat-label>Especialidades</mat-label>
+            <mat-select formControlName="especialidadIds" multiple>
+              <mat-select-trigger>
+                <mat-chip-grid>
+                  <mat-chip-row *ngFor="let id of creacion.get('especialidadIds')?.value" (removed)="removeSeleccionado('especialidadIds', id)">
+                    {{ getNombreEspecialidad(id) }}
+                    <button matChipRemove aria-label="Remover especialidad">
+                      <mat-icon>cancel</mat-icon>
+                    </button>
+                  </mat-chip-row>
+                </mat-chip-grid>
+              </mat-select-trigger>
+              <mat-option *ngFor="let esp of especialidades" [value]="esp.especialidadPk">
+                {{ esp.xnombre }}
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
+
+          <!-- Jerarquías / Órganos (Multi-Select con Chips) -->
+          <mat-form-field appearance="outline" class="col-span-half">
+            <mat-label>Órganos Jurisdiccionales / Jerarquías</mat-label>
+            <mat-select formControlName="jerarquiaIds" multiple>
+              <mat-select-trigger>
+                <mat-chip-grid>
+                  <mat-chip-row *ngFor="let id of creacion.get('jerarquiaIds')?.value" (removed)="removeSeleccionado('jerarquiaIds', id)">
+                    {{ getNombreJerarquia(id) }}
+                    <button matChipRemove aria-label="Remover jerarquía">
+                      <mat-icon>cancel</mat-icon>
+                    </button>
+                  </mat-chip-row>
+                </mat-chip-grid>
+              </mat-select-trigger>
+              <mat-option *ngFor="let jer of jerarquias" [value]="jer.jerarquiaPk">
+                {{ jer.xnombre }}
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
+
+          <!-- Ejes Estratégicos (Multi-Select con Chips) -->
+          <mat-form-field appearance="outline" class="col-span-half">
+            <mat-label>Ejes Estratégicos</mat-label>
+            <mat-select formControlName="ejeIds" multiple>
+              <mat-select-trigger>
+                <mat-chip-grid>
+                  <mat-chip-row *ngFor="let id of creacion.get('ejeIds')?.value" (removed)="removeSeleccionado('ejeIds', id)">
+                    {{ getNombreEje(id) }}
+                    <button matChipRemove aria-label="Remover eje">
+                      <mat-icon>cancel</mat-icon>
+                    </button>
+                  </mat-chip-row>
+                </mat-chip-grid>
+              </mat-select-trigger>
+              <mat-option *ngFor="let eje of ejes" [value]="eje.ejePk">
+                {{ eje.xnombre }}
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
+
+          <!-- Etiquetas / Palabras Clave (Multi-Select con Chips) -->
+          <mat-form-field appearance="outline" class="col-span-half">
+            <mat-label>Etiquetas / Palabras Clave</mat-label>
+            <mat-select formControlName="etiquetaIds" multiple>
+              <mat-select-trigger>
+                <mat-chip-grid>
+                  <mat-chip-row *ngFor="let id of creacion.get('etiquetaIds')?.value" (removed)="removeSeleccionado('etiquetaIds', id)">
+                    {{ getNombreEtiqueta(id) }}
+                    <button matChipRemove aria-label="Remover etiqueta">
+                      <mat-icon>cancel</mat-icon>
+                    </button>
+                  </mat-chip-row>
+                </mat-chip-grid>
+              </mat-select-trigger>
+              <mat-option *ngFor="let et of etiquetas" [value]="et.etiquetaPk">
+                {{ et.xnombre }}
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
+        </div>
+      </div>
+
+      <mat-divider class="section-divider"></mat-divider>
+
+      <!-- SECCIÓN 3: ASIGNACIÓN DE PERSONAL TÉCNICO -->
+      <div class="form-section">
+        <div class="section-title-wrapper">
+          <mat-icon class="section-icon">groups</mat-icon>
+          <h3 class="section-title">Equipo y Personal Responsable</h3>
+        </div>
+
+        <div class="form-grid">
+          <!-- Personal Asignado (Multi-Select con Chips) -->
+          <mat-form-field appearance="outline" class="col-span-full">
+            <mat-label>Personal Asignado al Proyecto</mat-label>
+            <mat-select formControlName="personalIds" multiple placeholder="Seleccione a los integrantes del equipo...">
+              <mat-select-trigger>
+                <mat-chip-grid>
+                  <mat-chip-row *ngFor="let id of creacion.get('personalIds')?.value" (removed)="removeSeleccionado('personalIds', id)">
+                    <mat-icon class="chip-avatar-icon">person</mat-icon>
+                    {{ getNombrePersonal(id) }}
+                    <button matChipRemove aria-label="Remover persona">
+                      <mat-icon>cancel</mat-icon>
+                    </button>
+                  </mat-chip-row>
+                </mat-chip-grid>
+              </mat-select-trigger>
+              <mat-option *ngFor="let p of personal" [value]="p.personalPk">
+                {{ p.xnombre }} {{ p.xapellido }}
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
+        </div>
+      </div>
+
+      <!-- BOTONES DE ACCIÓN DEL FORMULARIO -->
+      <div class="form-actions">
+        <button 
+          type="button" 
+          mat-button 
+          class="btn-cancel" 
+          [routerLink]="['/lista-proyectos']">
+          Cancelar
+        </button>
+
+        <button 
+          type="submit" 
+          mat-raised-button 
+          class="btn-pj-primary" 
+          [disabled]="!creacion.valid">
+          <mat-icon>save</mat-icon>
+          Guardar Cambios
+        </button>
+      </div>
+
+    </form>
+
+  </mat-card-content>
+</mat-card>

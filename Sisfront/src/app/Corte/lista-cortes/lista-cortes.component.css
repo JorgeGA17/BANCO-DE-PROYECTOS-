@@ -1,0 +1,245 @@
+/* Contenedor Principal Full-Width */
+.cortes-container {
+background-color: #F8F9FA;
+min-height: calc(100vh - 120px);
+padding: 24px 16px;
+display: flex;
+justify-content: center;
+font-family: Roboto, "Helvetica Neue", sans-serif;
+box-sizing: border-box;
+}
+
+.cortes-content-wrapper {
+width: 100%;
+max-width: 1600px;
+}
+
+/* Tarjeta Institucional Principal */
+.institutional-card {
+border-radius: 8px !important;
+border: 1px solid #E5E7EB !important;
+box-shadow: 0 1px 3px rgba(0, 0, 0, 0.04) !important;
+background-color: #ffffff;
+border-top: 4px solid #C00000 !important;
+overflow: hidden;
+}
+
+.card-header {
+padding: 20px 24px !important;
+display: flex;
+align-items: center;
+gap: 16px;
+border-bottom: 1px solid #F3F4F6;
+}
+
+.header-avatar-icon {
+background-color: rgba(192, 0, 0, 0.08);
+color: #C00000;
+display: flex;
+align-items: center;
+justify-content: center;
+border-radius: 50%;
+width: 44px;
+height: 44px;
+}
+
+.header-avatar-icon mat-icon {
+font-size: 24px;
+width: 24px;
+height: 24px;
+}
+
+.header-text-group {
+display: flex;
+flex-direction: column;
+}
+
+.card-title {
+font-size: 1.3rem !important;
+font-weight: 700 !important;
+color: #111827 !important;
+margin: 0 !important;
+}
+
+.card-subtitle {
+font-size: 0.85rem !important;
+color: #6B7280 !important;
+margin-top: 2px !important;
+}
+
+.card-body {
+padding: 24px !important;
+}
+
+/* Toolbar de Búsqueda */
+.search-toolbar {
+display: flex;
+justify-content: space-between;
+align-items: center;
+gap: 16px;
+margin-bottom: 24px;
+flex-wrap: wrap;
+}
+
+.search-field {
+flex: 1;
+min-width: 280px;
+max-width: 500px;
+}
+
+.search-icon-color {
+color: #C00000 !important;
+}
+
+.search-field .mat-mdc-form-field-subscript-wrapper {
+display: none;
+}
+
+.results-badge {
+display: flex;
+align-items: center;
+gap: 6px;
+background-color: #F8F9FA;
+border: 1px solid #E5E7EB;
+padding: 8px 14px;
+border-radius: 6px;
+font-size: 0.85rem;
+}
+
+.badge-label {
+color: #6B7280;
+}
+
+.badge-count {
+font-weight: 700;
+color: #C00000;
+}
+
+/* Grilla Adaptativa de Cortes */
+.cortes-grid {
+display: grid;
+grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+gap: 20px;
+}
+
+/* Tarjeta individual de Corte */
+.corte-card-item {
+background-color: #ffffff;
+border: 1px solid #E5E7EB;
+border-radius: 8px;
+overflow: hidden;
+cursor: pointer;
+transition: transform 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease;
+display: flex;
+flex-direction: column;
+}
+
+.corte-card-item:hover {
+transform: translateY(-4px);
+box-shadow: 0 8px 16px rgba(0, 0, 0, 0.08);
+border-color: rgba(192, 0, 0, 0.3);
+}
+
+.card-image-wrapper {
+position: relative;
+width: 100%;
+height: 160px;
+background-color: #F3F4F6;
+overflow: hidden;
+}
+
+.corte-img {
+width: 100%;
+height: 100%;
+object-fit: cover;
+transition: transform 0.3s ease;
+}
+
+.corte-card-item:hover .corte-img {
+transform: scale(1.04);
+}
+
+.corte-badge-tag {
+position: absolute;
+top: 10px;
+left: 10px;
+background-color: rgba(0, 0, 0, 0.75);
+color: #ffffff;
+font-size: 0.75rem;
+font-weight: 700;
+padding: 4px 10px;
+border-radius: 4px;
+letter-spacing: 0.5px;
+backdrop-filter: blur(4px);
+}
+
+.corte-card-details {
+padding: 16px;
+display: flex;
+flex-direction: column;
+justify-content: space-between;
+flex: 1;
+}
+
+.corte-name {
+font-size: 0.95rem;
+font-weight: 700;
+color: #111827;
+margin: 0 0 12px 0;
+line-height: 1.4;
+}
+
+.corte-card-footer {
+display: flex;
+align-items: center;
+justify-content: space-between;
+padding-top: 10px;
+border-top: 1px solid #F3F4F6;
+color: #C00000;
+font-size: 0.8rem;
+font-weight: 600;
+}
+
+.arrow-icon {
+font-size: 18px;
+width: 18px;
+height: 18px;
+transition: transform 0.2s ease;
+}
+
+.corte-card-item:hover .arrow-icon {
+transform: translateX(4px);
+}
+
+/* Estado Vacío */
+.empty-state {
+text-align: center;
+padding: 48px 16px;
+}
+
+.empty-icon {
+font-size: 48px;
+width: 48px;
+height: 48px;
+color: #9CA3AF;
+margin-bottom: 8px;
+}
+
+.empty-title {
+font-size: 1rem;
+font-weight: 700;
+color: #374151;
+margin: 0 0 4px 0;
+}
+
+.empty-subtitle {
+font-size: 0.85rem;
+color: #6B7280;
+margin: 0;
+}
+
+@media (max-width: 600px) {
+.cortes-grid {
+grid-template-columns: 1fr;
+}
+}

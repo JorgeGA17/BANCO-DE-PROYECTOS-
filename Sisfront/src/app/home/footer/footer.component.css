@@ -1,0 +1,173 @@
+.institutional-footer {
+  background-color: #1A1D20;
+  color: #E0E0E0;
+  font-family: Roboto, "Helvetica Neue", sans-serif;
+  margin-top: auto;
+}
+
+.footer-top-accent {
+  height: 4px;
+  background-color: #C00000;
+  width: 100%;
+}
+
+.footer-container {
+  max-width: 1140px;
+  margin: 0 auto;
+  padding: 40px 20px 20px 20px;
+}
+
+.footer-grid {
+  display: grid;
+  grid-template-columns: 1.5fr 1fr 1.2fr;
+  gap: 40px;
+}
+
+@media (max-width: 840px) {
+  .footer-grid {
+    grid-template-columns: 1fr;
+    gap: 30px;
+  }
+}
+
+/* Columna Marca */
+.brand-header {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 14px;
+}
+
+.brand-icon {
+  color: #C00000;
+  font-size: 32px;
+  width: 32px;
+  height: 32px;
+}
+
+.brand-title {
+  color: #ffffff;
+  font-size: 1.1rem;
+  font-weight: 700;
+  letter-spacing: 0.5px;
+  margin: 0;
+  line-height: 1.1;
+}
+
+.brand-subtitle {
+  color: #999999;
+  font-size: 0.75rem;
+  font-weight: 500;
+  letter-spacing: 1px;
+}
+
+.brand-description {
+  color: #B0B0B0;
+  font-size: 0.875rem;
+  line-height: 1.6;
+  margin: 0;
+}
+
+/* Títulos de Columnas */
+.col-title {
+  color: #ffffff;
+  font-size: 1rem;
+  font-weight: 600;
+  margin: 0 0 16px 0;
+  padding-bottom: 8px;
+  border-bottom: 2px solid #333333;
+  display: inline-block;
+}
+
+/* Listas de Enlaces y Contacto */
+.footer-links, .contact-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.footer-links li {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.link-icon {
+  color: #C00000;
+  font-size: 18px;
+  width: 18px;
+  height: 18px;
+}
+
+.footer-links a {
+  color: #CCCCCC;
+  text-decoration: none;
+  font-size: 0.875rem;
+  transition: color 0.2s ease, transform 0.2s ease;
+}
+
+.footer-links a:hover {
+  color: #ffffff;
+  text-decoration: underline;
+}
+
+.contact-list li {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  font-size: 0.875rem;
+  color: #CCCCCC;
+}
+
+.contact-icon {
+  color: #C00000;
+  font-size: 20px;
+  width: 20px;
+  height: 20px;
+  flex-shrink: 0;
+  margin-top: 2px;
+}
+
+/* Divisor */
+.footer-divider {
+  height: 1px;
+  background-color: #2D3135;
+  margin: 32px 0 20px 0;
+}
+
+/* Pie Inferior */
+.footer-bottom {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 12px;
+}
+
+.copyright-text {
+  color: #888888;
+  font-size: 0.8rem;
+  margin: 0;
+}
+
+.security-badge {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  color: #A0A0A0;
+  font-size: 0.775rem;
+  background-color: rgba(255, 255, 255, 0.05);
+  padding: 4px 10px;
+  border-radius: 4px;
+  border: 1px solid #333333;
+}
+
+.shield-icon {
+  color: #28a745;
+  font-size: 16px;
+  width: 16px;
+  height: 16px;
+}

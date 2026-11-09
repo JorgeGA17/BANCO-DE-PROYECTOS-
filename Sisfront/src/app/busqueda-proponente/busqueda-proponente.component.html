@@ -1,0 +1,190 @@
+<main class="proponente-container">
+  <div class="proponente-content-wrapper">
+
+    <mat-card class="institutional-card">
+      
+      <!-- Cabecera Institucional -->
+      <mat-card-header class="card-header">
+        <div mat-card-avatar class="header-avatar-icon">
+          <mat-icon>person_search</mat-icon>
+        </div>
+        <div class="header-text-group">
+          <mat-card-title class="card-title">Búsqueda por Proponente</mat-card-title>
+          <mat-card-subtitle class="card-subtitle">
+            Localización de proyectos e iniciativas por datos del autor o personal registrado
+          </mat-card-subtitle>
+        </div>
+      </mat-card-header>
+
+      <mat-card-content class="card-body">
+
+        <!-- PANEL DE BÚSQUEDA / FILTROS -->
+        <div class="filters-panel">
+          <div class="panel-header">
+            <span class="panel-title">
+              <mat-icon class="panel-icon">filter_alt</mat-icon>
+              Filtros por Identificación de Autor
+            </span>
+            <button 
+              *ngIf="searchTextDni || searchTextNombre || searchTextApellido"
+              mat-stroked-button 
+              class="btn-reset" 
+              (click)="searchTextDni=''; searchTextNombre=''; searchTextApellido=''; filtrarProyectos()">
+              <mat-icon>close</mat-icon>
+              Limpiar búsqueda
+            </button>
+          </div>
+
+          <div class="filters-grid">
+
+            <!-- Búsqueda por DNI -->
+            <mat-form-field appearance="outline" class="filter-field">
+              <mat-label>N° DNI / Documento</mat-label>
+              <input 
+                matInput 
+                type="text" 
+                [(ngModel)]="searchTextDni" 
+                (ngModelChange)="filtrarProyectos()" 
+                placeholder="Ej. 45892011">
+              <mat-icon matPrefix color="primary">badge</mat-icon>
+            </mat-form-field>
+
+            <!-- Búsqueda por Nombre -->
+            <mat-form-field appearance="outline" class="filter-field">
+              <mat-label>Nombre(s)</mat-label>
+              <input 
+                matInput 
+                type="text" 
+                [(ngModel)]="searchTextNombre" 
+                (ngModelChange)="filtrarProyectos()" 
+                placeholder="Ej. Carlos, María...">
+              <mat-icon matPrefix color="primary">person</mat-icon>
+            </mat-form-field>
+
+            <!-- Búsqueda por Apellido -->
+            <mat-form-field appearance="outline" class="filter-field">
+              <mat-label>Apellido(s)</mat-label>
+              <input 
+                matInput 
+                type="text" 
+                [(ngModel)]="searchTextApellido" 
+                (ngModelChange)="filtrarProyectos()" 
+                placeholder="Ej. Quispe, Mendoza...">
+              <mat-icon matPrefix color="primary">person_outline</mat-icon>
+            </mat-form-field>
+
+          </div>
+        </div>
+
+        <mat-divider class="section-divider"></mat-divider>
+
+        <!-- SECCIÓN DE RESULTADOS -->
+        <div class="results-header">
+          <div class="results-title-group">
+            <mat-icon class="results-icon">view_list</mat-icon>
+            <h2 class="results-title">Proponentes y Proyectos Registrados</h2>
+          </div>
+          <div class="results-badge" *ngIf="proponentesProyectosFiltrados">
+            <span class="badge-label">Total encontrados:</span>
+            <span class="badge-count">{{ proponentesProyectosFiltrados.length }}</span>
+          </div>
+        </div>
+
+        <!-- TABLA ESCRITORIO -->
+        <div class="table-container desktop-table-view">
+          <table class="pj-table">
+            <thead>
+              <tr>
+                <th scope="col" class="col-author">Proponente / Autor</th>
+                <th scope="col" class="col-name">Nombre del Proyecto</th>
+                <th scope="col" class="col-corte">Corte Superior (CSJ)</th>
+                <th scope="col" class="col-status">Estado</th>
+                <th scope="col" class="col-action">Acción</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let item of proponentesProyectosFiltrados">
+                
+                <td class="col-author">
+                  <div class="author-cell">
+                    <mat-icon class="author-icon">account_circle</mat-icon>
+                    <span class="author-name">{{ item.proponente }}</span>
+                  </div>
+                </td>
+
+                <td class="col-name cell-bold">
+                  {{ item.xnombreProyecto }}
+                </td>
+
+                <td class="col-corte">
+                  <span class="corte-chip">{{ item.nombreCorte }}</span>
+                </td>
+
+                <td class="col-status">
+                  <span class="status-pill">{{ item.nombreEstado || 'En Evaluación' }}</span>
+                </td>
+
+                <td class="col-action">
+                  <button 
+                    mat-raised-button 
+                    class="btn-pj-primary" 
+                    [routerLink]="['/detalle-proyecto', item.proyectopk]">
+                    <mat-icon>visibility</mat-icon>
+                    Ver detalle
+                  </button>
+                </td>
+
+              </tr>
+
+              <!-- Estado Vacío -->
+              <tr *ngIf="proponentesProyectosFiltrados && proponentesProyectosFiltrados.length === 0">
+                <td colspan="5" class="empty-state-cell">
+                  <mat-icon class="empty-icon">search_off</mat-icon>
+                  <p class="empty-title">No se encontraron proponentes coincidentes</p>
+                  <p class="empty-subtitle">Intente con otros términos de búsqueda o verifique la ortografía.</p>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <!-- VISTA MÓVIL: Tarjetas Dinámicas -->
+        <div class="mobile-cards-view">
+          <div 
+            *ngFor="let item of proponentesProyectosFiltrados" 
+            class="mobile-proponente-card">
+            
+            <div class="mobile-card-header">
+              <span class="corte-chip">{{ item.nombreCorte }}</span>
+              <span class="status-pill">{{ item.nombreEstado || 'En Evaluación' }}</span>
+            </div>
+
+            <div class="author-cell mobile-author">
+              <mat-icon class="author-icon">account_circle</mat-icon>
+              <strong class="author-name">{{ item.proponente }}</strong>
+            </div>
+
+            <h3 class="mobile-project-title">{{ item.xnombreProyecto }}</h3>
+
+            <div class="mobile-card-actions">
+              <button 
+                mat-raised-button 
+                class="btn-pj-primary full-width-btn" 
+                [routerLink]="['/detalle-proyecto', item.proyectopk]">
+                <mat-icon>visibility</mat-icon>
+                Ver detalle
+              </button>
+            </div>
+          </div>
+
+          <div *ngIf="proponentesProyectosFiltrados && proponentesProyectosFiltrados.length === 0" class="mobile-empty-state">
+            <mat-icon class="empty-icon">search_off</mat-icon>
+            <p class="empty-title">No se encontraron proponentes</p>
+          </div>
+        </div>
+
+      </mat-card-content>
+    </mat-card>
+
+  </div>
+</main>

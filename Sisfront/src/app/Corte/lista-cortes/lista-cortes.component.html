@@ -1,0 +1,75 @@
+<mat-card class="institutional-card">
+  
+  <!-- Cabecera Institucional -->
+  <mat-card-header class="card-header">
+    <div mat-card-avatar class="header-avatar-icon">
+      <mat-icon>account_balance</mat-icon>
+    </div>
+    <div class="header-text-group">
+      <mat-card-title class="card-title">Cortes Superiores de Justicia</mat-card-title>
+      <mat-card-subtitle class="card-subtitle">
+        Directorio de las 35 Cortes Superiores de Justicia de la República del Perú
+      </mat-card-subtitle>
+    </div>
+  </mat-card-header>
+
+  <mat-card-content class="card-body">
+    
+    <!-- Toolbar de Búsqueda -->
+    <div class="search-toolbar">
+      <mat-form-field appearance="outline" class="search-field">
+        <mat-label>Buscar Corte Superior de Justicia...</mat-label>
+        <mat-icon matPrefix class="search-icon-color">search</mat-icon>
+        <input 
+          matInput 
+          type="text" 
+          [(ngModel)]="searchText" 
+          placeholder="Ej. Arequipa, Lima, Cusco, Especializada...">
+        <button 
+          *ngIf="searchText" 
+          matSuffix 
+          mat-icon-button 
+          aria-label="Limpiar búsqueda" 
+          (click)="searchText=''">
+          <mat-icon>close</mat-icon>
+        </button>
+      </mat-form-field>
+
+      <div class="results-badge" *ngIf="filteredCortes()">
+        <span class="badge-label">Cortes activas:</span>
+        <span class="badge-count">{{ filteredCortes().length }}</span>
+      </div>
+    </div>
+
+    <!-- Grilla de Tarjetas de Cortes -->
+    <div class="cortes-grid">
+      <div 
+        *ngFor="let corte of filteredCortes()" 
+        class="corte-card-item"
+        (click)="viewProyectos(corte.xnombreCorto)">
+        
+        <div class="card-image-wrapper">
+          <img [src]="corte.fotoUrl" [alt]="corte.xnombreCorto" class="corte-img" (error)="corte.fotoUrl='assets/carrusel/palacio1.jpg'">
+          <div class="corte-badge-tag">{{ corte.xnombreCorto }}</div>
+        </div>
+
+        <div class="corte-card-details">
+          <h3 class="corte-name">{{ corte.xnombre }}</h3>
+          <div class="corte-card-footer">
+            <span class="action-text">Ver comisión y proyectos</span>
+            <mat-icon class="arrow-icon">arrow_forward</mat-icon>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- Estado Vacío -->
+    <div *ngIf="filteredCortes() && filteredCortes().length === 0" class="empty-state">
+      <mat-icon class="empty-icon">search_off</mat-icon>
+      <p class="empty-title">No se encontraron Cortes Superiores</p>
+      <p class="empty-subtitle">Intenta buscar con otra palabra clave.</p>
+    </div>
+
+  </mat-card-content>
+</mat-card>

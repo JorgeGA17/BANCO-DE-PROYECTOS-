@@ -1,0 +1,165 @@
+<header class="app-header">
+  <mat-toolbar class="navbar-custom">
+    <div class="toolbar-content-wrapper">
+      
+      <!-- Brand & Logo -->
+      <a class="navbar-brand" routerLink="/" matRipple [matRippleUnbounded]="false">
+        <img class="logo" src="assets/bproyecto0.png" alt="Poder Judicial del Perú" (error)="onLogoError($event)">
+      </a>
+
+      <!-- Desktop Navigation Menu -->
+      <nav class="desktop-nav">
+        <!-- Inicio -->
+        <a 
+          mat-button 
+          routerLink="/" 
+          routerLinkActive="active-link" 
+          [routerLinkActiveOptions]="{ exact: true }" 
+          class="nav-btn">
+          <mat-icon class="nav-icon">home</mat-icon>
+          <span>Inicio</span>
+        </a>
+
+        <!-- Trigger Dropdown Proyectos -->
+        <button 
+          mat-button 
+          [matMenuTriggerFor]="proyectosMenu" 
+          class="nav-btn dropdown-trigger">
+          <mat-icon class="nav-icon">folder_special</mat-icon>
+          <span>Proyectos</span>
+          <mat-icon class="arrow-icon">arrow_drop_down</mat-icon>
+        </button>
+
+        <!-- Dropdown Menu Proyectos -->
+        <mat-menu #proyectosMenu="matMenu" class="pj-dropdown-menu">
+          <div class="menu-header-label">Consultas Públicas</div>
+          <a mat-menu-item routerLink="/lista-proyectos">
+            <mat-icon color="primary">format_list_bulleted</mat-icon>
+            <span>Listado de Proyectos</span>
+          </a>
+          <a mat-menu-item routerLink="/lista-cortes">
+            <mat-icon color="primary">account_balance</mat-icon>
+            <span>Por Corte Superior</span>
+          </a>
+          <a mat-menu-item routerLink="/busqueda-proponente">
+            <mat-icon color="primary">person_search</mat-icon>
+            <span>Por Proponente</span>
+          </a>
+          <a mat-menu-item routerLink="/busqueda-avanzada">
+            <mat-icon color="primary">manage_search</mat-icon>
+            <span>Búsqueda Avanzada</span>
+          </a>
+
+          <!-- Sección Privada CRUD solo si logueado -->
+          <mat-divider *ngIf="authService.isLoggedIn()"></mat-divider>
+          <div class="menu-header-label admin-label" *ngIf="authService.isLoggedIn()">Gestión de Proyectos</div>
+
+          <a mat-menu-item *ngIf="authService.isLoggedIn()" routerLink="/creacion">
+            <mat-icon class="icon-crud-create">add_circle</mat-icon>
+            <span>Crear Proyecto</span>
+          </a>
+          <a mat-menu-item *ngIf="authService.isLoggedIn()" routerLink="/editar">
+            <mat-icon class="icon-crud-edit">edit_note</mat-icon>
+            <span>Editar Proyecto</span>
+          </a>
+        </mat-menu>
+
+        <!-- Estadística -->
+        <a 
+          mat-button 
+          routerLink="/estadistica" 
+          routerLinkActive="active-link" 
+          class="nav-btn">
+          <mat-icon class="nav-icon">analytics</mat-icon>
+          <span>Estadística</span>
+        </a>
+      </nav>
+
+      <!-- Right Actions (Auth / User) -->
+      <div class="header-actions">
+        <!-- Usuario Autenticado -->
+        <button 
+          *ngIf="authService.isLoggedIn()" 
+          mat-flat-button 
+          class="btn-auth btn-logout" 
+          (click)="logout()">
+          <mat-icon>logout</mat-icon>
+          <span class="auth-btn-text">Cerrar Sesión</span>
+        </button>
+
+        <!-- Usuario No Autenticado -->
+        <a 
+          *ngIf="!authService.isLoggedIn()" 
+          mat-flat-button 
+          routerLink="/login" 
+          class="btn-auth btn-login">
+          <mat-icon>lock_open</mat-icon>
+          <span class="auth-btn-text">Iniciar Sesión</span>
+        </a>
+
+        <!-- Botón Menú Móvil -->
+        <button 
+          mat-icon-button 
+          class="mobile-menu-trigger" 
+          (click)="toggleMobileMenu()" 
+          aria-label="Abrir menú de navegación">
+          <mat-icon>{{ isMobileMenuOpen ? 'close' : 'menu' }}</mat-icon>
+        </button>
+      </div>
+
+    </div>
+  </mat-toolbar>
+
+  <!-- Mobile Collapsible Menu -->
+  <div class="mobile-nav-panel" [class.is-open]="isMobileMenuOpen">
+    <div class="mobile-nav-links">
+      <a routerLink="/" (click)="closeMobileMenu()" class="mobile-nav-item">
+        <mat-icon>home</mat-icon>
+        <span>Inicio</span>
+      </a>
+
+      <div class="mobile-section-header">Consultas de Proyectos</div>
+      <a routerLink="/lista-proyectos" (click)="closeMobileMenu()" class="mobile-nav-item sub-item">
+        <mat-icon>format_list_bulleted</mat-icon>
+        <span>Listado de Proyectos</span>
+      </a>
+      <a routerLink="/lista-cortes" (click)="closeMobileMenu()" class="mobile-nav-item sub-item">
+        <mat-icon>account_balance</mat-icon>
+        <span>Por Corte Superior</span>
+      </a>
+      <a routerLink="/busqueda-proponente" (click)="closeMobileMenu()" class="mobile-nav-item sub-item">
+        <mat-icon>person_search</mat-icon>
+        <span>Por Proponente</span>
+      </a>
+      <a routerLink="/busqueda-avanzada" (click)="closeMobileMenu()" class="mobile-nav-item sub-item">
+        <mat-icon>manage_search</mat-icon>
+        <span>Búsqueda Avanzada</span>
+      </a>
+
+      <ng-container *ngIf="authService.isLoggedIn()">
+        <div class="mobile-section-header admin-label">Gestión de Proyectos</div>
+        <a routerLink="/creacion" (click)="closeMobileMenu()" class="mobile-nav-item sub-item admin-item">
+          <mat-icon>add_circle</mat-icon>
+          <span>Crear Proyecto</span>
+        </a>
+        <a routerLink="/editar" (click)="closeMobileMenu()" class="mobile-nav-item sub-item admin-item">
+          <mat-icon>edit_note</mat-icon>
+          <span>Editar Proyecto</span>
+        </a>
+      </ng-container>
+
+      <a routerLink="/estadistica" (click)="closeMobileMenu()" class="mobile-nav-item">
+        <mat-icon>analytics</mat-icon>
+        <span>Estadística</span>
+      </a>
+    </div>
+  </div>
+</header>
+
+<!-- Asistente de IA RAG -->
+<app-rag></app-rag>
+
+<!-- Contenido principal con Router Outlet -->
+<main class="main-content">
+  <router-outlet></router-outlet>
+</main>

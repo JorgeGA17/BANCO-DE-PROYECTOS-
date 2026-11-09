@@ -1,0 +1,152 @@
+/* Contenedor Principal Centrado */
+.login-container {
+display: flex;
+justify-content: center;
+align-items: center;
+min-height: calc(100vh - 120px);
+background-color: #F8F9FA;
+padding: 32px 16px;
+box-sizing: border-box;
+font-family: Roboto, "Helvetica Neue", sans-serif;
+}
+
+.login-content-wrapper {
+width: 100%;
+max-width: 420px;
+}
+
+/* Tarjeta Institucional de Login */
+.institutional-login-card {
+border-radius: 8px !important;
+border: 1px solid #E5E7EB !important;
+box-shadow: 0 4px 16px rgba(0, 0, 0, 0.06) !important;
+background-color: #ffffff;
+border-top: 4px solid #C00000 !important;
+overflow: hidden;
+}
+
+/* Encabezado */
+.card-header {
+background-color: #ffffff;
+padding: 28px 24px 16px 24px;
+text-align: center;
+border-bottom: 1px solid #F3F4F6;
+display: flex;
+flex-direction: column;
+align-items: center;
+}
+
+.header-avatar-icon {
+background-color: rgba(192, 0, 0, 0.08);
+color: #C00000;
+display: flex;
+align-items: center;
+justify-content: center;
+border-radius: 50%;
+width: 52px;
+height: 52px;
+margin-bottom: 12px;
+}
+
+.header-avatar-icon mat-icon {
+font-size: 28px;
+width: 28px;
+height: 28px;
+}
+
+.header-title {
+margin: 0;
+font-size: 1.35rem;
+font-weight: 700;
+color: #111827;
+}
+
+.header-subtitle {
+margin: 4px 0 0 0;
+font-size: 0.825rem;
+color: #6B7280;
+}
+
+/* Cuerpo del Formulario */
+.card-body {
+padding: 24px 28px 32px 28px !important;
+}
+
+.login-form {
+display: flex;
+flex-direction: column;
+gap: 16px;
+}
+
+.full-width-field {
+width: 100%;
+}
+
+.field-icon {
+color: #C00000 !important;
+margin-right: 8px;
+}
+
+/* Botón Acceder */
+.btn-pj-login {
+background-color: #C00000 !important;
+color: #FFFFFF !important;
+padding: 12px 20px !important;
+font-size: 0.95rem !important;
+font-weight: 700 !important;
+letter-spacing: 0.5px !important;
+border-radius: 4px !important;
+height: 48px !important;
+display: flex !important;
+align-items: center !important;
+justify-content: center !important;
+gap: 8px !important;
+margin-top: 8px;
+box-shadow: 0 2px 4px rgba(192, 0, 0, 0.2) !important;
+transition: all 0.2s ease !important;
+}
+
+.btn-pj-login:hover:not([disabled]) {
+background-color: #990000 !important;
+box-shadow: 0 4px 8px rgba(192, 0, 0, 0.3) !important;
+}
+
+.btn-pj-login[disabled] {
+background-color: #E5E7EB !important;
+color: #9CA3AF !important;
+box-shadow: none !important;
+}
+
+/* Enlace Olvidó su contraseña */
+.forgot-wrapper {
+text-align: center;
+margin-top: 8px;
+}
+
+.forgot-password {
+display: inline-flex;
+align-items: center;
+gap: 4px;
+color: #6B7280;
+text-decoration: none;
+font-size: 0.825rem;
+font-weight: 500;
+transition: color 0.2s ease;
+}
+
+.forgot-icon {
+font-size: 16px;
+width: 16px;
+height: 16px;
+}
+
+.forgot-password:hover {
+color: #C00000;
+text-decoration: underline;
+}
+
+@media (max-width: 480px) {
+.card-body {
+padding: 20px 16px 24px 16px !important;
+}
+}

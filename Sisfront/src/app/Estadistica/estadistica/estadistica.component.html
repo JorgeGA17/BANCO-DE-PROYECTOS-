@@ -1,0 +1,74 @@
+<main class="stats-container" [class.is-fullscreen]="isFullscreen">
+  <div class="stats-content-wrapper">
+
+    <mat-card class="institutional-card">
+      
+      <!-- Cabecera Institucional del Dashboard -->
+      <mat-card-header class="card-header">
+        <div mat-card-avatar class="header-avatar-icon">
+          <mat-icon>analytics</mat-icon>
+        </div>
+        
+        <div class="header-text-group">
+          <mat-card-title class="card-title">Estadísticas y Reportes de Gestión</mat-card-title>
+          <mat-card-subtitle class="card-subtitle">
+            Cuadro de indicadores del Banco de Proyectos de la UGDJ
+          </mat-card-subtitle>
+        </div>
+
+        <div class="header-actions">
+          <button 
+            mat-stroked-button A
+            class="btn-action-icon" 
+            (click)="toggleFullscreen()" 
+            [matTooltip]="isFullscreen ? 'Salir de pantalla completa' : 'Pantalla completa'">
+            <mat-icon>{{ isFullscreen ? 'fullscreen_exit' : 'fullscreen' }}</mat-icon>
+            <span class="btn-text-responsive">{{ isFullscreen ? 'Restaurar' : 'Maximizar' }}</span>
+          </button>
+        </div>
+      </mat-card-header>
+
+      <mat-card-content class="card-body">
+
+        <!-- Toolbar Superior del Reporte -->
+        <div class="dashboard-toolbar">
+          <div class="toolbar-info">
+            <span class="live-dot"></span>
+            <span class="info-label">Indicadores en Tiempo Real</span>
+          </div>
+
+          <div class="toolbar-tools">
+            <button 
+              mat-button 
+              class="btn-reload" 
+              (click)="recargarReporte()">
+              <mat-icon>refresh</mat-icon>
+              Recargar reporte
+            </button>
+          </div>
+        </div>
+
+        <!-- Marcos del Iframe con indicador de carga -->
+        <div class="powerbi-wrapper">
+          
+          <!-- Overlay de Carga -->
+          <div class="loading-overlay" *ngIf="isLoading">
+            <mat-spinner diameter="40" color="warn"></mat-spinner>
+            <p class="loading-text">Cargando indicadores de Power BI...</p>
+          </div>
+
+          <!-- iFrame de Power BI -->
+          <iframe 
+            *ngIf="iframeUrl"
+            [src]="iframeUrl" 
+            class="powerbi-frame"
+            allowFullScreen="true"
+            (load)="onIframeLoad()">
+          </iframe>
+        </div>
+
+      </mat-card-content>
+    </mat-card>
+
+  </div>
+</main>

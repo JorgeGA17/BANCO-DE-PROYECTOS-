@@ -1,0 +1,236 @@
+/* Contenedor Principal Fluid */
+.stats-container {
+background-color: #F8F9FA;
+min-height: calc(100vh - 120px);
+padding: 24px 16px;
+display: flex;
+justify-content: center;
+font-family: Roboto, "Helvetica Neue", sans-serif;
+box-sizing: border-box;
+transition: all 0.3s ease;
+}
+
+.stats-content-wrapper {
+width: 100%;
+max-width: 1600px;
+}
+
+/* Modo Pantalla Completa (Fullscreen Toggle) */
+.stats-container.is-fullscreen {
+position: fixed;
+top: 0;
+left: 0;
+width: 100vw;
+height: 100vh;
+z-index: 9999;
+padding: 0;
+background-color: #ffffff;
+}
+
+.stats-container.is-fullscreen .stats-content-wrapper {
+max-width: 100%;
+height: 100%;
+}
+
+.stats-container.is-fullscreen .institutional-card {
+border-radius: 0 !important;
+height: 100vh;
+display: flex;
+flex-direction: column;
+}
+
+.stats-container.is-fullscreen .card-body {
+flex: 1;
+display: flex;
+flex-direction: column;
+}
+
+.stats-container.is-fullscreen .powerbi-wrapper {
+flex: 1;
+min-height: 0;
+}
+
+/* Tarjeta Institucional */
+.institutional-card {
+border-radius: 8px !important;
+border: 1px solid #E5E7EB !important;
+box-shadow: 0 1px 3px rgba(0, 0, 0, 0.04) !important;
+background-color: #ffffff;
+border-top: 4px solid #C00000 !important;
+overflow: hidden;
+}
+
+.card-header {
+padding: 16px 24px !important;
+display: flex;
+align-items: center;
+gap: 16px;
+border-bottom: 1px solid #F3F4F6;
+}
+
+.header-avatar-icon {
+background-color: rgba(192, 0, 0, 0.08);
+color: #C00000;
+display: flex;
+align-items: center;
+justify-content: center;
+border-radius: 50%;
+width: 44px;
+height: 44px;
+}
+
+.header-avatar-icon mat-icon {
+font-size: 24px;
+width: 24px;
+height: 24px;
+}
+
+.header-text-group {
+display: flex;
+flex-direction: column;
+flex: 1;
+}
+
+.card-title {
+font-size: 1.25rem !important;
+font-weight: 700 !important;
+color: #111827 !important;
+margin: 0 !important;
+}
+
+.card-subtitle {
+font-size: 0.85rem !important;
+color: #6B7280 !important;
+margin-top: 2px !important;
+}
+
+.header-actions {
+display: flex;
+align-items: center;
+gap: 8px;
+}
+
+.btn-action-icon {
+color: #374151 !important;
+border-color: #D1D5DB !important;
+font-weight: 600 !important;
+font-size: 0.825rem !important;
+}
+
+.btn-action-icon mat-icon {
+color: #C00000;
+font-size: 18px !important;
+width: 18px !important;
+height: 18px !important;
+}
+
+.card-body {
+padding: 16px 24px 24px 24px !important;
+}
+
+/* Toolbar interna del Reporte */
+.dashboard-toolbar {
+display: flex;
+justify-content: space-between;
+align-items: center;
+background-color: #FAFAFA;
+border: 1px solid #E5E7EB;
+border-bottom: none;
+border-radius: 6px 6px 0 0;
+padding: 8px 16px;
+}
+
+.toolbar-info {
+display: flex;
+align-items: center;
+gap: 8px;
+}
+
+.live-dot {
+width: 8px;
+height: 8px;
+background-color: #16A34A;
+border-radius: 50%;
+display: inline-block;
+box-shadow: 0 0 0 2px rgba(22, 163, 74, 0.2);
+}
+
+.info-label {
+font-size: 0.8rem;
+font-weight: 600;
+color: #4B5563;
+}
+
+.btn-reload {
+color: #4B5563 !important;
+font-size: 0.8rem !important;
+}
+
+.btn-reload mat-icon {
+font-size: 16px !important;
+width: 16px !important;
+height: 16px !important;
+margin-right: 4px;
+}
+
+/* Wrapper e iFrame del Reporte Power BI */
+.powerbi-wrapper {
+position: relative;
+width: 100%;
+height: calc(100vh - 280px);
+min-height: 600px;
+background-color: #F3F4F6;
+border: 1px solid #E5E7EB;
+border-radius: 0 0 6px 6px;
+overflow: hidden;
+}
+
+.powerbi-frame {
+width: 100%;
+height: 100%;
+border: none;
+display: block;
+}
+
+/* Indicador de Carga Overlay */
+.loading-overlay {
+position: absolute;
+top: 0;
+left: 0;
+width: 100%;
+height: 100%;
+background-color: #ffffff;
+display: flex;
+flex-direction: column;
+justify-content: center;
+align-items: center;
+gap: 12px;
+z-index: 10;
+}
+
+.loading-text {
+font-size: 0.9rem;
+font-weight: 600;
+color: #4B5563;
+margin: 0;
+}
+
+/* Responsividad */
+@media (max-width: 768px) {
+.stats-container {
+padding: 12px 8px;
+}
+
+.card-body {
+padding: 12px !important;
+}
+
+.btn-text-responsive {
+display: none;
+}
+
+.powerbi-wrapper {
+height: calc(100vh - 220px);
+min-height: 480px;
+}
+}

@@ -1,0 +1,48 @@
+<div class="institutional-slider">
+  <div class="slides-wrapper">
+    <div 
+      *ngFor="let slide of slides; let i = index" 
+      class="slide-item" 
+      [class.active]="i === currentSlide"
+    >
+      <img [src]="slide.image" [alt]="slide.title" class="slide-image">
+      <div class="slide-overlay">
+        <div class="slide-caption">
+          <span class="caption-badge">Poder Judicial del Perú</span>
+          <h2 class="mat-headline-4 caption-title">{{ slide.title }}</h2>
+          <p class="mat-body-1 caption-subtitle">{{ slide.subtitle }}</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Botones de Navegación -->
+  <button 
+    mat-icon-button 
+    class="nav-button prev-btn" 
+    (click)="prevSlide()" 
+    aria-label="Imagen anterior"
+  >
+    <mat-icon>chevron_left</mat-icon>
+  </button>
+  
+  <button 
+    mat-icon-button 
+    class="nav-button next-btn" 
+    (click)="nextSlide()" 
+    aria-label="Siguiente imagen"
+  >
+    <mat-icon>chevron_right</mat-icon>
+  </button>
+
+  <!-- Indicadores -->
+  <div class="slider-indicators">
+    <button 
+      *ngFor="let slide of slides; let i = index" 
+      class="indicator-dot" 
+      [class.active]="i === currentSlide"
+      (click)="goToSlide(i)"
+      [attr.aria-label]="'Ir a imagen ' + (i + 1)"
+    ></button>
+  </div>
+</div>

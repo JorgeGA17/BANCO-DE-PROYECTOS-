@@ -1,0 +1,217 @@
+/* Estilos Institucionales Poder Judicial - HomeComponent */
+
+.ugdj-container {
+  background-color: #F4F6F8;
+  min-height: calc(100vh - 120px);
+  padding: 32px 16px;
+  display: flex;
+  justify-content: center;
+}
+
+.ugdj-content-wrapper {
+  max-width: 1140px;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+/* Tarjetas Angular Material */
+.ugdj-card {
+  border-radius: 8px !important;
+  border: 1px solid #E0E0E0 !important;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.04) !important;
+  background-color: #ffffff;
+  overflow: hidden;
+}
+
+/* Tarjeta Principal / Hero */
+.hero-card {
+  border-top: 4px solid #C00000 !important;
+  padding: 8px 0;
+}
+
+.hero-card .header-avatar-icon {
+  background-color: rgba(192, 0, 0, 0.08);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+}
+
+.hero-card .header-avatar-icon mat-icon {
+  color: #C00000;
+}
+
+.hero-card .text-bold {
+  font-weight: 700;
+  color: #212529;
+}
+
+.hero-card .description-text {
+  color: #555555;
+  line-height: 1.65;
+  margin-top: 12px;
+  font-size: 0.95rem;
+}
+
+/* Encabezados de Sección */
+.section-header {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 16px;
+}
+
+.section-header .section-icon {
+  color: #C00000;
+  font-size: 28px;
+  width: 28px;
+  height: 28px;
+}
+
+.section-header .mat-title-large {
+  font-size: 1.25rem;
+  font-weight: 700;
+  color: #212529;
+  margin: 0;
+}
+
+/* Tabla Angular Material */
+.table-container {
+  overflow-x: auto;
+  padding: 0 !important;
+}
+
+.institutional-table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.institutional-table .table-header-cell {
+  background-color: #F8F9FA;
+  color: #212529;
+  font-weight: 700;
+  font-size: 0.875rem;
+  border-bottom: 2px solid #E0E0E0;
+  padding: 14px 16px;
+}
+
+.institutional-table .table-body-cell {
+  font-size: 0.9rem;
+  color: #212529;
+  padding: 12px 16px;
+  border-bottom: 1px solid #F0F0F0;
+}
+
+.institutional-table .cell-bold {
+  font-weight: 600;
+}
+
+.institutional-table .table-row:hover {
+  background-color: rgba(192, 0, 0, 0.02);
+}
+
+.institutional-table .role-badge {
+  display: inline-block;
+  padding: 4px 10px;
+  background-color: #F0F4F8;
+  color: #334E68;
+  border-radius: 4px;
+  font-size: 0.825rem;
+  font-weight: 500;
+}
+
+/* Grilla de Tarjetas Inferiores */
+.cards-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(480px, 1fr));
+  gap: 24px;
+}
+
+@media (max-width: 600px) {
+  .cards-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+.feature-card {
+  padding: 20px;
+}
+
+.feature-card .feature-card-layout {
+  display: flex;
+  gap: 20px;
+  align-items: flex-start;
+}
+
+@media (max-width: 576px) {
+  .feature-card .feature-card-layout {
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+  }
+}
+
+.feature-card .image-wrapper {
+  flex-shrink: 0;
+}
+
+.feature-card .image-wrapper .portrait-img {
+  width: 140px;
+  height: 150px;
+  object-fit: cover;
+  border-radius: 6px;
+  border: 1px solid #E0E0E0;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.06);
+}
+
+.feature-card .feature-card-details {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.feature-card .feature-card-details .institutional-chip {
+  background-color: #C00000 !important;
+  color: #ffffff !important;
+  font-size: 0.75rem;
+  height: 24px;
+  align-self: flex-start;
+}
+
+.feature-card .feature-card-details .event-chip {
+  background-color: #4A5568 !important;
+  color: #ffffff !important;
+  font-size: 0.75rem;
+  height: 24px;
+  align-self: flex-start;
+}
+
+@media (max-width: 576px) {
+  .feature-card .feature-card-details .institutional-chip,
+  .feature-card .feature-card-details .event-chip {
+    align-self: center;
+  }
+}
+
+.feature-card .feature-card-details .authority-title {
+  font-size: 1rem;
+  font-weight: 700;
+  color: #212529;
+  margin: 4px 0 0 0;
+}
+
+.feature-card .feature-card-details .authority-name {
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: #C00000;
+  margin: 0;
+}
+
+.feature-card .feature-card-details .text-muted {
+  color: #555555;
+  font-size: 0.875rem;
+  line-height: 1.5;
+  margin: 4px 0 0 0;
+}
