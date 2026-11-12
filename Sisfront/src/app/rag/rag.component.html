@@ -1,16 +1,16 @@
 <div class="rag-widget-wrapper">
 
-  <!-- Botón Flotante (FAB) Institucional -->
+  <!-- Pestaña Lateral Anclada (No tapa botones inferiores ni paginación) -->
   <button 
     *ngIf="!open" 
     type="button"
-    class="rag-fab-btn" 
+    class="rag-side-tab" 
     (click)="toggleChat()"
-    matTooltip="Asistente Virtual IA - Consultas RAG"
+    matTooltip="Abrir Asistente Virtual IA (RAG)"
     matTooltipPosition="left">
-    <mat-icon class="fab-icon">smart_toy</mat-icon>
-    <span class="fab-text">Asistente IA</span>
-    <span class="fab-badge">RAG</span>
+    <mat-icon class="tab-icon">smart_toy</mat-icon>
+    <span class="tab-label">Asistente IA</span>
+    <mat-icon class="tab-chevron">chevron_left</mat-icon>
   </button>
 
   <!-- Ventana Flotante del Chatbot -->

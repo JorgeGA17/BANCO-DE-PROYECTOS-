@@ -1,58 +1,72 @@
 :host {
-  position: relative;
-  z-index: 2100;
-  font-family: Roboto, "Helvetica Neue", sans-serif;
+position: relative;
+z-index: 2100;
+font-family: Roboto, "Helvetica Neue", sans-serif;
 }
 
 /* Container Wrapper */
 .rag-widget-wrapper {
-  position: fixed;
-  right: 24px;
-  bottom: 24px;
-  z-index: 2100;
+position: fixed;
+right: 24px;
+bottom: 24px;
+z-index: 2100;
 }
 
-/* ==== BOTÓN FLOTANTE (FAB) ==== */
-.rag-fab-btn {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  background-color: #800000;
-  color: #FFFFFF;
-  border: none;
-  padding: 10px 18px;
-  border-radius: 30px;
-  cursor: pointer;
-  box-shadow: 0 4px 16px rgba(128, 0, 0, 0.35);
-  transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
-  outline: none;
+
+.rag-side-tab {
+position: fixed;
+right: 0;
+top: 50%;
+transform: translateY(-50%);
+display: flex;
+flex-direction: column;
+align-items: center;
+gap: 8px;
+background-color: #800000; 
+color: #FFFFFF;
+border: none;
+border-top-left-radius: 12px;
+border-bottom-left-radius: 12px;
+padding: 14px 8px;
+cursor: pointer;
+box-shadow: -3px 4px 14px rgba(0, 0, 0, 0.22);
+transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+outline: none;
+z-index: 2100;
 }
 
-.rag-fab-btn:hover {
-  background-color: #A00000;
-  transform: translateY(-2px);
-  box-shadow: 0 6px 20px rgba(128, 0, 0, 0.45);
+.rag-side-tab:hover {
+background-color: #A00000;
+padding-right: 14px; /* Efecto de deslizamiento hacia afuera */
+box-shadow: -5px 6px 18px rgba(128, 0, 0, 0.35);
 }
-.fab-icon {
+
+.tab-icon {
 font-size: 22px;
 width: 22px;
 height: 22px;
 }
 
-.fab-text {
-font-size: 0.875rem;
+.tab-label {
+writing-mode: vertical-rl;
+transform: rotate(180deg); /* Texto vertical legible de abajo hacia arriba */
+font-size: 0.8rem;
 font-weight: 700;
-letter-spacing: 0.3px;
+letter-spacing: 0.8px;
+text-transform: uppercase;
+white-space: nowrap;
 }
 
-.fab-badge {
-background-color: rgba(255, 255, 255, 0.2);
-color: #FFFFFF;
-font-size: 0.675rem;
-font-weight: 800;
-padding: 2px 6px;
-border-radius: 10px;
-letter-spacing: 0.5px;
+.tab-chevron {
+font-size: 18px;
+width: 18px;
+height: 18px;
+opacity: 0.85;
+transition: transform 0.2s ease;
+}
+
+.rag-side-tab:hover .tab-chevron {
+transform: translateX(-2px);
 }
 
 /* ==== VENTANA FLOTANTE DEL CHAT ==== */
@@ -348,6 +362,10 @@ color: #9CA3AF !important;
 .rag-widget-wrapper {
 right: 12px;
 bottom: 12px;
+}
+
+.rag-side-tab {
+padding: 10px 6px;
 }
 
 .rag-chat-panel {

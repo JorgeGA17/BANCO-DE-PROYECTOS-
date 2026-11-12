@@ -36,7 +36,8 @@ export class ListaProyectosComponent implements OnInit {
     return this.proyectos.filter(proyecto => {
       return (proyecto.xnombreProyecto && proyecto.xnombreProyecto.toLowerCase().includes(searchTextLower)) ||
              (proyecto.xobjetivoGeneral && proyecto.xobjetivoGeneral.toLowerCase().includes(searchTextLower)) ||
-             (proyecto.nombreCorte && proyecto.nombreCorte.toLowerCase().includes(searchTextLower));
+             (proyecto.nombreCorte && proyecto.nombreCorte.toLowerCase().includes(searchTextLower)) ||
+             (proyecto.nombreEstado && proyecto.nombreEstado.toLowerCase().includes(searchTextLower));
     });
   }
   

@@ -1,159 +1,173 @@
-<mat-card class="institutional-card">
-  
-  <!-- Cabecera Institucional con Borde Rojo -->
-  <mat-card-header class="card-header">
-    <div mat-card-avatar class="header-avatar-icon">
-      <mat-icon>folder_special</mat-icon>
-    </div>
-    <div class="header-text-group">
-      <mat-card-title class="card-title">Listado de Proyectos y Buenas Prácticas</mat-card-title>
-      <mat-card-subtitle class="card-subtitle">
-        Banco de Proyectos de la Unidad de Gestión de Despacho Judicial (UGDJ)
-      </mat-card-subtitle>
-    </div>
-  </mat-card-header>
+<main class="projects-container">
+  <div class="projects-content-wrapper">
 
-  <mat-card-content class="card-body">
-    
-    <!-- Toolbar de Búsqueda -->
-    <div class="search-toolbar">
-      <mat-form-field appearance="outline" class="search-field">
-        <mat-label>Buscar proyecto, objetivo o Corte Superior...</mat-label>
-        <mat-icon matPrefix class="search-icon-color">search</mat-icon>
-        <input 
-          matInput 
-          type="text" 
-          [(ngModel)]="searchText" 
-          (ngModelChange)="buscar()" 
-          placeholder="Ej. Notificaciones, Lima, Inteligencia Artificial...">
-        <button 
-          *ngIf="searchText" 
-          matSuffix 
-          mat-icon-button 
-          aria-label="Limpiar búsqueda" 
-          (click)="searchText=''; buscar()">
-          <mat-icon>close</mat-icon>
-        </button>
-      </mat-form-field>
+    <mat-card class="institutional-card">
+      
+      <!-- Cabecera Institucional con Borde Rojo -->
+      <mat-card-header class="card-header">
+        <div mat-card-avatar class="header-avatar-icon">
+          <mat-icon>folder_special</mat-icon>
+        </div>
+        <div class="header-text-group">
+          <mat-card-title class="card-title">Listado de Proyectos y Buenas Prácticas</mat-card-title>
+          <mat-card-subtitle class="card-subtitle">
+            Banco de Proyectos de la Unidad de Gestión de Despacho Judicial (UGDJ)
+          </mat-card-subtitle>
+        </div>
+      </mat-card-header>
 
-      <div class="results-badge" *ngIf="filteredProyectos()">
-        <span class="badge-label">Total registrados:</span>
-        <span class="badge-count">{{ filteredProyectos().length }}</span>
-      </div>
-    </div>
+      <mat-card-content class="card-body">
+        
+        <!-- Toolbar de Búsqueda -->
+        <div class="search-toolbar">
+          <mat-form-field appearance="outline" class="search-field">
+            <mat-label>Buscar proyecto, objetivo, Corte o estado...</mat-label>
+            <mat-icon matPrefix class="search-icon-color">search</mat-icon>
+            <input 
+              matInput 
+              type="text" 
+              [(ngModel)]="searchText" 
+              (ngModelChange)="buscar()" 
+              placeholder="Ej. Notificaciones, Lima, Aprobado...">
+            <button 
+              *ngIf="searchText" 
+              matSuffix 
+              mat-icon-button 
+              aria-label="Limpiar búsqueda" 
+              (click)="searchText=''; buscar()">
+              <mat-icon>close</mat-icon>
+            </button>
+          </mat-form-field>
 
-    <!-- VISTA DE ESCRITORIO: Tabla Institucional -->
-    <div class="table-container desktop-table-view">
-      <table class="pj-table">
-        <thead>
-          <tr>
-            <th scope="col" class="col-name">Nombre del Proyecto</th>
-            <th scope="col" class="col-corte">Corte Superior (CSJ)</th>
-            <th scope="col" class="col-objective">Objetivo General</th>
-            <th scope="col" class="col-action">Acción</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr *ngFor="let proyecto of filteredProyectos() | paginate: { itemsPerPage: noOfRows, currentPage: page }">
+          <div class="results-badge" *ngIf="filteredProyectos()">
+            <span class="badge-label">Total registrados:</span>
+            <span class="badge-count">{{ filteredProyectos().length }}</span>
+          </div>
+        </div>
+
+        <!-- VISTA DE ESCRITORIO: Tabla Institucional -->
+        <div class="table-container desktop-table-view">
+          <table class="pj-table">
+            <thead>
+              <tr>
+                <th scope="col" class="col-name">Nombre del Proyecto</th>
+                <th scope="col" class="col-corte">Corte Superior (CSJ)</th>
+                <th scope="col" class="col-objective">Objetivo General</th>
+                <th scope="col" class="col-status">Estado</th>
+                <th scope="col" class="col-action">Acción</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let proyecto of filteredProyectos() | paginate: { itemsPerPage: noOfRows, currentPage: page }">
+                
+                <td class="col-name cell-bold">
+                  <div class="project-title-wrapper">
+                    <span>{{ proyecto.xnombreProyecto }}</span>
+                  </div>
+                </td>
+
+                <td class="col-corte">
+                  <span class="corte-chip">
+                    {{ proyecto.nombreCorte }}
+                  </span>
+                </td>
+
+                <td class="col-objective">
+                  <p class="objective-text">{{ proyecto.xobjetivoGeneral || 'Sin objetivo registrado' }}</p>
+                </td>
+
+                <td class="col-status">
+                  <span class="status-pill">
+                    {{ proyecto.nombreEstado || 'En Evaluación' }}
+                  </span>
+                </td>
+
+                <td class="col-action">
+                  <button 
+                    mat-raised-button 
+                    class="btn-pj-primary" 
+                    [routerLink]="['/detalle-proyecto', proyecto.proyectoPk]">
+                    <mat-icon>visibility</mat-icon>
+                    Ver detalle
+                  </button>
+                </td>
+
+              </tr>
+
+              <!-- Estado Vacío -->
+              <tr *ngIf="filteredProyectos() && filteredProyectos().length === 0">
+                <td colspan="5" class="empty-state-cell">
+                  <mat-icon class="empty-icon">search_off</mat-icon>
+                  <p class="empty-title">No se encontraron proyectos</p>
+                  <p class="empty-subtitle">Intenta buscar con otros términos o limpia el filtro de búsqueda.</p>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <!-- VISTA MÓVIL / TABLET: Tarjetas Dinámicas -->
+        <div class="mobile-cards-view">
+          <div 
+            *ngFor="let proyecto of filteredProyectos() | paginate: { itemsPerPage: noOfRows, currentPage: page }" 
+            class="mobile-project-card">
             
-            <td class="col-name cell-bold">
-              <div class="project-title-wrapper">
-                <span>{{ proyecto.xnombreProyecto }}</span>
-              </div>
-            </td>
+            <div class="mobile-card-header">
+              <span class="corte-chip">{{ proyecto.nombreCorte }}</span>
+              <span class="status-pill">{{ proyecto.nombreEstado || 'En Evaluación' }}</span>
+            </div>
 
-            <td class="col-corte">
-              <span class="corte-chip">
-                {{ proyecto.nombreCorte }}
-              </span>
-            </td>
+            <h3 class="mobile-project-title">{{ proyecto.xnombreProyecto }}</h3>
+            
+            <p class="mobile-project-objective" *ngIf="proyecto.xobjetivoGeneral">
+              {{ proyecto.xobjetivoGeneral }}
+            </p>
 
-            <td class="col-objective">
-              <p class="objective-text">{{ proyecto.xobjetivoGeneral || 'Sin objetivo registrado' }}</p>
-            </td>
-
-            <td class="col-action">
+            <div class="mobile-card-actions">
               <button 
                 mat-raised-button 
-                class="btn-pj-primary" 
+                class="btn-pj-primary full-width-btn" 
                 [routerLink]="['/detalle-proyecto', proyecto.proyectoPk]">
                 <mat-icon>visibility</mat-icon>
                 Ver detalle
               </button>
-            </td>
+            </div>
+          </div>
 
-          </tr>
-
-          <!-- Estado Vacío -->
-          <tr *ngIf="filteredProyectos() && filteredProyectos().length === 0">
-            <td colspan="4" class="empty-state-cell">
-              <mat-icon class="empty-icon">search_off</mat-icon>
-              <p class="empty-title">No se encontraron proyectos</p>
-              <p class="empty-subtitle">Intenta buscar con otros términos o limpia el filtro de búsqueda.</p>
-            </td>
-          </tr>
-        </tbody>
-      </table>
-    </div>
-
-    <!-- VISTA MÓVIL / TABLET: Tarjetas Dinámicas -->
-    <div class="mobile-cards-view">
-      <div 
-        *ngFor="let proyecto of filteredProyectos() | paginate: { itemsPerPage: noOfRows, currentPage: page }" 
-        class="mobile-project-card">
-        
-        <div class="mobile-card-header">
-          <span class="corte-chip">{{ proyecto.nombreCorte }}</span>
+          <div *ngIf="filteredProyectos() && filteredProyectos().length === 0" class="mobile-empty-state">
+            <mat-icon class="empty-icon">search_off</mat-icon>
+            <p class="empty-title">No se encontraron proyectos</p>
+          </div>
         </div>
 
-        <h3 class="mobile-project-title">{{ proyecto.xnombreProyecto }}</h3>
-        
-        <p class="mobile-project-objective" *ngIf="proyecto.xobjetivoGeneral">
-          {{ proyecto.xobjetivoGeneral }}
-        </p>
+        <!-- Paginación -->
+        <div class="pagination-section">
+          
+          <div class="page-size-selector">
+            <span class="selector-label">Mostrar por página:</span>
+            <select class="rows-select" name="noRows" id="noRows" (change)="page=1" [(ngModel)]="noOfRows">
+              <option value="5">5</option>
+              <option value="10">10</option>
+              <option value="15">15</option>
+            </select>
+          </div>
 
-        <div class="mobile-card-actions">
-          <button 
-            mat-raised-button 
-            class="btn-pj-primary full-width-btn" 
-            [routerLink]="['/detalle-proyecto', proyecto.proyectoPk]">
-            <mat-icon>visibility</mat-icon>
-            Ver detalle
-          </button>
+          <pagination-controls 
+            (pageChange)="page = $event"
+            previousLabel="Anterior"
+            nextLabel="Siguiente">
+          </pagination-controls>
+
+          <pagination-template #p="paginationApi" (pageChange)="page=$event">
+            <div class="page-counter-info">
+              Mostrando del <strong>{{ getStartIndex(p.getCurrent(), p.getLastPage()) }}</strong> al <strong>{{ getLastIndex(p.getCurrent(), p.getLastPage()) }}</strong> de <strong>{{ datas?.length }}</strong> registros
+            </div>
+          </pagination-template>
+
         </div>
-      </div>
 
-      <div *ngIf="filteredProyectos() && filteredProyectos().length === 0" class="mobile-empty-state">
-        <mat-icon class="empty-icon">search_off</mat-icon>
-        <p class="empty-title">No se encontraron proyectos</p>
-      </div>
-    </div>
+      </mat-card-content>
+    </mat-card>
 
-    <!-- Paginación -->
-    <div class="pagination-section">
-      
-      <div class="page-size-selector">
-        <span class="selector-label">Mostrar por página:</span>
-        <select class="rows-select" name="noRows" id="noRows" (change)="page=1" [(ngModel)]="noOfRows">
-          <option value="5">5</option>
-          <option value="10">10</option>
-          <option value="15">15</option>
-        </select>
-      </div>
-
-      <pagination-controls 
-        (pageChange)="page = $event"
-        previousLabel="Anterior"
-        nextLabel="Siguiente">
-      </pagination-controls>
-
-      <pagination-template #p="paginationApi" (pageChange)="page=$event">
-        <div class="page-counter-info">
-          Mostrando del <strong>{{ getStartIndex(p.getCurrent(), p.getLastPage()) }}</strong> al <strong>{{ getLastIndex(p.getCurrent(), p.getLastPage()) }}</strong> de <strong>{{ datas?.length }}</strong> registros
-        </div>
-      </pagination-template>
-
-    </div>
-
-  </mat-card-content>
-</mat-card>
+  </div>
+</main>
